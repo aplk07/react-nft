@@ -1,0 +1,135 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.User-account {
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  width: 400px;
+  background-color: #61dafba0;
+  border-radius: 10px;
+}
+
+.Account-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.Account-header {
+  display: flex;
+  flex: 1;
+  padding: 5px;
+}
+
+.Account-details {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.Account-from {
+  display: flex;
+  flex: 2;
+}
+
+.Account-fromAddress {
+  display: flex;
+  flex: 8;
+  font-size: 12px;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.Account-address {
+  display: flex;
+  flex: 2;
+  font-size: 16px;
+  background-color: #61dafba0;
+  padding: 5px;
+  border-radius: 8px;
+}
+
+.Account-balanceDetails {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.Account-balance {
+  display: flex;
+  flex: 2;
+  font-size: 24px;
+}
+
+.Account-balanceHeader {
+  display: flex;
+  flex: 2;
+  font-size: 18px;
+}
+
+.Account-balanceValue {
+  display: flex;
+  flex: 8;
+  font-size: 12px;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.Form-container{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.Transaction-result {
+  background-color: #4BB543;
+  display: flex;
+  /* flex: 1; */
+  flex-direction: column;
+}
+
+.Transaction-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
