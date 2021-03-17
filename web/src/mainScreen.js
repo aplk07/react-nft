@@ -44,12 +44,7 @@ export default function MainScreen() {
   const Main = () => (
     <Switch>
       <Route exact path="/">
-        <ProfileScreen
-          ethereumBalance={bal}
-          transactionCount={txnCount}
-          nonFun={nonFun}
-          list={list}
-        />
+        <ProfileScreen ethereumBalance={bal} nonFun={nonFun} list={list} />
       </Route>
 
       <Route exact path="/token-create">
