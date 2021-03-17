@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
 import { createToken } from "../services/createToken";
+
 export default function TokenCreationScreen({ fromAddress }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -46,9 +46,7 @@ export default function TokenCreationScreen({ fromAddress }) {
               </div>
               <div className="my-3 my-md-5">
                 <div class="form-group">
-                  <label class="form-label">
-                    Description
-                  </label>
+                  <label class="form-label">Description</label>
                   <textarea
                     className="form-control"
                     name="description"
@@ -66,7 +64,7 @@ export default function TokenCreationScreen({ fromAddress }) {
           <button
             type="button"
             className="btn btn-success"
-            onClick={() => createToken(fromAddress, {name, description})}
+            onClick={() => createToken(fromAddress, { name, description })}
           >
             <i class="fe fe-send mr-2"></i>Send
           </button>
