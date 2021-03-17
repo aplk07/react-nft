@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from "react";
+
 import { createToken } from "../services/createToken";
+
 export default function TokenCreationScreen({ fromAddress }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");

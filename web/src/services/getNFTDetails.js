@@ -1,4 +1,5 @@
 import { web3 } from "../constants/constants";
+
 export const getNFTDetails = async function (tokenAddress, walletAddress) {
   const minABI = [
     {

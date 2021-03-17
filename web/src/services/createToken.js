@@ -1,4 +1,5 @@
 import { web3 } from "../constants/constants";
+
 export const createToken = async function (fromAddress, data) {
   const minABI = [
     {
