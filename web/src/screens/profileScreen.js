@@ -1,9 +1,6 @@
 import React from "react";
-export default function ProfileScreen({
-  ethereumBalance,
-  nonFun,
-  list,
-}) {
+
+export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
   return (
     <div className="container">
       <div className="page-header">
@@ -38,7 +35,7 @@ export default function ProfileScreen({
                 <tbody>
                   {list.map((data, index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <td>
                           <span class="text-muted">{index + 1}</span>
                         </td>

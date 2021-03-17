@@ -2,9 +2,18 @@ import React, { useState } from "react";
 
 import { createToken } from "../services/createToken";
 
-export default function TokenCreationScreen({ fromAddress }) {
+export default function TokenCreationScreen({ fromAddress, updateChange }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [txHash, setTXHash] = useState("");
+  const [txData, setTXData] = useState(undefined);
+  const updateTransaction = async function (txh) {
+    setTXHash(txh);
+  };
+  const transactionStatus = async function (data) {
+    setTXData(data);
+    updateChange();
+  };
   return (
     <div className="container">
       <div className="page-header">
@@ -47,9 +56,7 @@ export default function TokenCreationScreen({ fromAddress }) {
               </div>
               <div className="my-3 my-md-5">
                 <div class="form-group">
-                  <label class="form-label">
-                    Description
-                  </label>
+                  <label class="form-label">Description</label>
                   <textarea
                     className="form-control"
                     name="description"
@@ -67,10 +74,36 @@ export default function TokenCreationScreen({ fromAddress }) {
           <button
             type="button"
             className="btn btn-success"
-            onClick={() => createToken(fromAddress, {name, description})}
+            onClick={() => {
+              if (name && description) {
+                createToken(
+                  fromAddress,
+                  { name, description },
+                  updateTransaction,
+                  transactionStatus
+                );
+              } else {
+                alert("Input Needed");
+              }
+            }}
           >
-            <i class="fe fe-send mr-2"></i>Send
+            <i className="fe fe-send mr-2"></i>Send
           </button>
+          {txData ? (
+            <div className="m-4 position-absolute">
+              <div className="alert alert-icon alert-success" role="alert">
+                <i className="fe fe-check mr-2" aria-hidden="true"></i>
+                {txData.status ? "Token Created Successfully" : "Failure"}
+              </div>
+            </div>
+          ) : txHash.length > 0 ? (
+            <div className="m-4 position-absolute">
+              <div className="alert alert-icon alert-primary" role="alert">
+                <i className="fe fe-bell mr-2" aria-hidden="true"></i>
+                {txHash}
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
     </div>

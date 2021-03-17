@@ -1,19 +1,21 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable jsx-a11y/anchor-has-content */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Switch, Route, NavLink } from "react-router-dom";
-import ProfileScreen from "./screens/profileScreen";
+
 import { web3 } from "./constants/constants";
+
 import { getNFTDetails } from "./services/getNFTDetails";
 import { getNFTURI } from "./services/getNFTURI";
+
 import TokenCreationScreen from "./screens/createTokenScreen";
+import ProfileScreen from "./screens/profileScreen";
+
 export default function MainScreen() {
   const [activeAddress, setActiveAddress] = useState("");
   const [bal, setBal] = useState(0);
   const [nonFun, setNonFun] = useState(0);
   const [list, setList] = useState([]);
-  useEffect(async () => {
+
+  async function renderData() {
     try {
       window.ethereum.enable();
       const addr = await web3.eth.getAccounts();
@@ -37,25 +39,31 @@ export default function MainScreen() {
     } catch (err) {
       console.log(err);
     }
+  }
+  useEffect(() => {
+    renderData();
+    window.ethereum.on("accountsChanged", function () {
+      renderData();
+    });
   }, []);
-  const profileScreen = () => {
-    return (
-      <ProfileScreen
-        ethereumBalance={bal}
-        nonFun={nonFun}
-        list={list}
-      />
-    );
-  };
-  const tokenCreate = () => {
-    return <TokenCreationScreen fromAddress={activeAddress[0]} />;
-  };
+
   const Main = () => (
     <Switch>
-      <Route exact path="/" component={profileScreen}></Route>
-      <Route exact path="/token-create" component={tokenCreate}></Route>
+      <Route exact path="/">
+        <ProfileScreen ethereumBalance={bal} nonFun={nonFun} list={list} />
+      </Route>
+
+      <Route exact path="/token-create">
+        <TokenCreationScreen
+          fromAddress={activeAddress[0]}
+          updateChange={() => {
+            renderData();
+          }}
+        />
+      </Route>
     </Switch>
   );
+
   return (
     <div className="page-main">
       <div className="header py-4">
@@ -79,7 +87,6 @@ export default function MainScreen() {
               </div>
             </div>
             <a
-              href="#"
               className="header-toggler d-lg-none ml-3 ml-lg-0"
               data-toggle="collapse"
               data-target="#headerMenuCollapse"
