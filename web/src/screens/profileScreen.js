@@ -1,18 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import React from "react";
 export default function ProfileScreen({
   ethereumBalance,
-  transactionCount,
-  tokenDetail,
   nonFun,
   list,
 }) {
-  const [tokens, setTokens] = useState([]);
-  const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    setCount(nonFun.balance);
-  }, [nonFun.balance]);
   return (
     <div className="container">
       <div className="page-header">
@@ -26,41 +17,6 @@ export default function ProfileScreen({
             </div>
             <div className="py-4 m-0 text-center h1 text-grey">
               {ethereumBalance} ETH
-            </div>
-          </div>
-        </div>
-        <div className="col-md-3">
-          <div className="card p-3 px-4">
-            <div>
-              <i class="fa fa-history text-yellow m-1" aria-hidden="true"></i>
-              Total Transactions
-            </div>
-            <div className="py-4 m-0 text-center h1 text-yellow">
-              {transactionCount}
-            </div>
-            <div className="d-flex">
-              <small className="text-muted">Ethereum</small>
-              <div className="ml-auto">
-                <i className="fab fa-ethereum text-grey m-1"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="col-md-3">
-          <div className="card p-3 px-4">
-            <div>
-              <i className="fa fa-key text-blue m-1"></i>
-              Token
-            </div>
-            <div className="py-4 m-0 text-center h1 text-blue">
-              {tokenDetail.balance}
-            </div>
-            <div className="d-flex">
-              <small className="text-muted">{tokenDetail.name}</small>
-              <div className="ml-auto">
-                <i className="fa fa-plug text-grey m-1"></i>
-                Unit {tokenDetail.symbol}
-              </div>
             </div>
           </div>
         </div>
