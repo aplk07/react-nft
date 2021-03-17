@@ -6,8 +6,8 @@ import { web3 } from "./constants/constants";
 import { getNFTDetails } from "./services/getNFTDetails";
 import { getNFTURI } from "./services/getNFTURI";
 
-import TokenCreationScreen from "./screens/createTokenScreen";
-import ProfileScreen from "./screens/profileScreen";
+import TokenCreationScreen from "./screens/CreateTokenScreen";
+import ProfileScreen from "./screens/ProfileScreen";
 
 export default function MainScreen() {
   const [activeAddress, setActiveAddress] = useState("");
@@ -69,30 +69,16 @@ export default function MainScreen() {
       <div className="header py-4">
         <div className="container">
           <div className="d-flex">
-            <a className="header-brand" href="./index.html"></a>
             <div className="d-flex order-lg-2 ml-auto">
               <div className="dropdown">
-                <a
-                  href="#"
-                  className="nav-link pr-0 leading-none"
-                  data-toggle="dropdown"
-                >
-                  <span className="ml-2 d-none d-lg-block">
-                    <span className="text-default">Ethereum Wallet</span>
-                    <small className="text-muted d-block mt-1">
-                      Address: {activeAddress}
-                    </small>
-                  </span>
-                </a>
+                <span className="ml-2 d-none d-lg-block">
+                  <span className="text-default">Ethereum Wallet</span>
+                  <small className="text-muted d-block mt-1">
+                    Address: {activeAddress}
+                  </small>
+                </span>
               </div>
             </div>
-            <a
-              className="header-toggler d-lg-none ml-3 ml-lg-0"
-              data-toggle="collapse"
-              data-target="#headerMenuCollapse"
-            >
-              <span className="header-toggler-icon"></span>
-            </a>
           </div>
         </div>
       </div>
