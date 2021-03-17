@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-export default function ProfileScreen({
-  ethereumBalance,
-  transactionCount,
-  nonFun,
-  list,
-}) {
+export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
   return (
     <div className="container">
       <div className="page-header">

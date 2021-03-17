@@ -12,7 +12,6 @@ import ProfileScreen from "./screens/profileScreen";
 export default function MainScreen() {
   const [activeAddress, setActiveAddress] = useState("");
   const [bal, setBal] = useState(0);
-  const [txnCount, setTxnCount] = useState(0);
   const [nonFun, setNonFun] = useState(0);
   const [list, setList] = useState([]);
 
@@ -20,8 +19,6 @@ export default function MainScreen() {
     try {
       window.ethereum.enable();
       const addr = await web3.eth.getAccounts();
-      const count = await web3.eth.getTransactionCount(addr[0]);
-
       const nonFungible = await getNFTDetails(
         "0xbafa36b476ee5a17b69892a1a1283d85983370a4",
         addr[0]
@@ -34,7 +31,6 @@ export default function MainScreen() {
       setNonFun(nonFungible);
       setList(tempList);
       setActiveAddress(addr);
-      setTxnCount(count);
       setBal(
         parseFloat(
           web3.utils.fromWei(await web3.eth.getBalance(addr[0]), "ether")
@@ -110,7 +106,6 @@ export default function MainScreen() {
                       <i className="fe fe-home"></i> Profile
                     </NavLink>
                   </li>
-
                   <li className="nav-item">
                     <NavLink
                       exact

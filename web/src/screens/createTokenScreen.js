@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+
 import { createToken } from "../services/createToken";
 
 export default function TokenCreationScreen({ fromAddress }) {
