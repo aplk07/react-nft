@@ -17,7 +17,7 @@ export default function MainScreen() {
 
   async function renderData() {
     try {
-      window.ethereum.enable();
+      window.ethereum.request({ method: 'eth_requestAccounts' });
       const addr = await web3.eth.getAccounts();
       const nonFungible = await getNFTDetails(
         "0xbafa36b476ee5a17b69892a1a1283d85983370a4",
