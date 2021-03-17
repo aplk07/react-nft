@@ -35,7 +35,7 @@ export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
                 <tbody>
                   {list.map((data, index) => {
                     return (
-                      <tr>
+                      <tr key={index}>
                         <td>
                           <span class="text-muted">{index + 1}</span>
                         </td>

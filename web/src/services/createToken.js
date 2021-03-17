@@ -1,6 +1,6 @@
 import { web3 } from "../constants/constants";
 
-export const createToken = async function (fromAddress, data) {
+export const createToken = async function (fromAddress, data, update, success) {
   const minABI = [
     {
       inputs: [],
@@ -453,9 +453,10 @@ export const createToken = async function (fromAddress, data) {
     .send({ from: fromAddress })
     .on("transactionHash", (hash) => {
       console.log(hash);
+      update(hash);
     })
     .then((done) => {
-      alert("Transaction Success");
       console.log(done);
+      success(done);      
     });
 };

@@ -15,7 +15,7 @@ export default function MainScreen() {
   const [nonFun, setNonFun] = useState(0);
   const [list, setList] = useState([]);
 
-  useEffect(async () => {
+  async function renderData() {
     try {
       window.ethereum.enable();
       const addr = await web3.eth.getAccounts();
@@ -39,6 +39,12 @@ export default function MainScreen() {
     } catch (err) {
       console.log(err);
     }
+  }
+  useEffect(() => {
+    renderData();
+    window.ethereum.on("accountsChanged", function () {
+      renderData();
+    });
   }, []);
 
   const Main = () => (
@@ -48,7 +54,12 @@ export default function MainScreen() {
       </Route>
 
       <Route exact path="/token-create">
-        <TokenCreationScreen fromAddress={activeAddress[0]} />
+        <TokenCreationScreen
+          fromAddress={activeAddress[0]}
+          updateChange={() => {
+            renderData();
+          }}
+        />
       </Route>
     </Switch>
   );
