@@ -19,12 +19,12 @@ export default function MainScreen() {
     try {
       const addr = await web3.eth.getAccounts();
       const nonFungible = await getNFTDetails(
-        "0xBafA36b476Ee5a17b69892A1A1283d85983370a4",
+        "0x7E40600D3f52CCc62FB94187ac6DecB8802C22F3",
         addr[0]
       );
       const tempList = await getNFTURI(
         nonFungible.totalSup,
-        "0xBafA36b476Ee5a17b69892A1A1283d85983370a4",
+        "0x7E40600D3f52CCc62FB94187ac6DecB8802C22F3",
         addr[0]
       );
       setNonFun(nonFungible);
@@ -49,7 +49,7 @@ export default function MainScreen() {
   const Main = () => (
     <Switch>
       <Route exact path="/">
-        <ProfileScreen ethereumBalance={bal} nonFun={nonFun} list={list} />
+        <ProfileScreen ethereumBalance={bal} nonFun={nonFun} list={list} tokenAddress="0x7E40600D3f52CCc62FB94187ac6DecB8802C22F3"/>
       </Route>
 
       <Route exact path="/token-create">

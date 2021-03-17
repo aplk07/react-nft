@@ -2,6 +2,7 @@ import React from "react";
 import { Accordion, Card } from "react-bootstrap";
 
 export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
+  const uri = "https://ropsten.etherscan.io/token/0x7e40600d3f52ccc62fb94187ac6decb8802c22f3?a=";
   return (
     <div className="container">
       <div className="page-header">
@@ -22,16 +23,16 @@ export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
         <div className="col-12">
           <div className="card">
             <div className="card-header">
-              <h3 className="card-title text-white">Tokens</h3>
+              <h3 className="card-title text-white">Your Patents</h3>
             </div>
             <div className="table-responsive pb-0">
               <table className="table card-table table-vcenter text-nowrap">
                 <thead>
                   <tr>
                     <th className="w-1 text-white">Id</th>
-                    <th className="text-white h1">Name</th>
-                    <th className="text-white">Token Name</th>
-                    <th className="text-white">symbol</th>
+                    <th className="text-white h1">Token Name</th>
+                    <th className="text-white">Patent Name</th>
+                    <th className="text-white">Patent ID</th>
                   </tr>
                 </thead>
               </table>
@@ -39,6 +40,7 @@ export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
                 {list.map((data, index) => {
                   const tokenName = JSON.parse(data).name;
                   const tokenDesc = JSON.parse(data).description;
+                  const tokenId = JSON.parse(data).id;
                   return (
                     <Card key={index}>
                       <Card.Header>
@@ -53,17 +55,17 @@ export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
                             </span>
                           </p>
                           <p className="text-white">{nonFun.name}</p>
-                          <p className="text-white">{tokenName}</p>
-                          <p className="text-white">{nonFun.symbol}</p>
+                          <p className="text-white">{tokenName} (PTNT) </p>
+                          <a className="text-white" href={uri+tokenId} target="_blank">{tokenId} </a>
                         </Accordion.Toggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey={tokenName}>
                         <Card.Body>
-                          <label className="text-white">Token Name : </label>
+                          <label className="text-white">Patent Name : </label>
                           <span className="text-white"> {tokenName}</span>
                           <br />
                           <label className="text-white">
-                            Token Description :
+                            Patent Description :
                           </label>
                           <span className="text-white">{tokenDesc}</span>
                         </Card.Body>

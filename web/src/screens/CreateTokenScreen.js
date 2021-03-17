@@ -17,17 +17,15 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
   return (
     <div className="container">
       <div className="page-header">
-        <div className="page-title">Create Token</div>
+        <div className="page-title">Create Patent</div>
       </div>
       <div className="container">
         <div className="card d-flex align-items-center p-10 pt-5 mt-auto">
           <div className="col-auto m-5">
-            <i className="fab fa-ethereum fa-2x text-white"></i>
+            <i className="fa fa-book fa-2x text-white"></i>
           </div>
           <div className="card-header">
-            <h3 className="card-title text-white">
-              Create your Collectible Token
-            </h3>
+            <h3 className="card-title text-white">Add Your Patent</h3>
           </div>
           <div className="card-body">
             <form>
@@ -49,7 +47,7 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
                     <label className="form-label text-white">Name</label>
                     <input
                       className="form-control"
-                      placeholder="Phoebe Buffay"
+                      placeholder="Pen with scanner"
                       value={name}
                       onChange={(val) => setName(val.target.value)}
                     />
@@ -58,12 +56,12 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
               </div>
               <div className="my-3 my-md-5">
                 <div className="form-group">
-                  <label className="form-label text-white">Description</label>
+                  <label className="form-label text-white">Abstract</label>
                   <textarea
                     className="form-control"
                     name="description"
                     rows="7"
-                    placeholder="Description"
+                    placeholder="With a machine as small as a pen, you can transfer text from paper directly into a computer. Christer Fåhraeus invented the C-pen."
                     value={description}
                     onChange={(val) => setDescription(val.target.value)}
                   >
@@ -75,7 +73,7 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
           </div>
           <button
             type="button"
-            className="btn btn-success"
+            className="btn btn-success mb-6"
             onClick={() => {
               if (name && description) {
                 createToken(
@@ -89,7 +87,7 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
               }
             }}
           >
-            <i className="fe fe-send mr-2"></i>Send
+            <i className="fa fa-plus mr-2"></i>Add Patent
           </button>
           {txData ? (
             <div className="m-4 position-absolute">

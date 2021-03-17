@@ -7,24 +7,24 @@ export const getNFTURI = async function (
 ) {
   const minABI = [
     {
-      "inputs": [
+      inputs: [
         {
-          "internalType": "uint256",
-          "name": "tokenId",
-          "type": "uint256",
+          internalType: "uint256",
+          name: "tokenId",
+          type: "uint256",
         },
       ],
-      "name": "ownerOf",
-      "outputs": [
+      name: "ownerOf",
+      outputs: [
         {
-          "internalType": "address",
-          "name": "",
-          "type": "address",
+          internalType: "address",
+          name: "",
+          type: "address",
         },
       ],
-      "stateMutability": "view",
-      "type": "function",
-      "constant": true,
+      stateMutability: "view",
+      type: "function",
+      constant: true,
     },
     {
       inputs: [
@@ -52,7 +52,10 @@ export const getNFTURI = async function (
   for (let i = 1; i <= totalSupply; i++) {
     const owner = await uriContract.methods.ownerOf(i).call();
     if (owner === ownerAddress) {
-      const detail = await uriContract.methods.tokenURI(i).call();
+      let detail = await uriContract.methods.tokenURI(i).call();
+      const addTokenId = JSON.parse(detail);
+      addTokenId.id = i;
+      detail = JSON.stringify(addTokenId);
       temp.push(detail);
     }
   }
