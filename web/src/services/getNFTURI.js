@@ -49,7 +49,7 @@ export const getNFTURI = async function (
   ];
   const uriContract = new web3.eth.Contract(minABI, tokenAddress);
   const temp = [];
-  console.log(totalSupply);
+  console.log("total supply", totalSupply);
   for (let i = 1; i <= totalSupply; i++) {
     const owner = await uriContract.methods.ownerOf(i).call();
     if (owner === ownerAddress) {
