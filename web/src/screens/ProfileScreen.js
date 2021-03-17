@@ -17,16 +17,16 @@ export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
             </div>
           </div>
         </div>
-        <div class="col-12">
-          <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">Tokens</h3>
+        <div className="col-12">
+          <div className="card">
+            <div className="card-header">
+              <h3 className="card-title">Tokens</h3>
             </div>
-            <div class="table-responsive">
-              <table class="table card-table table-vcenter text-nowrap">
+            <div className="table-responsive">
+              <table className="table card-table table-vcenter text-nowrap">
                 <thead>
                   <tr>
-                    <th class="w-1">Id</th>
+                    <th className="w-1">Id</th>
                     <th>Name</th>
                     <th>Token</th>
                     <th>symbol</th>
@@ -37,7 +37,7 @@ export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
                     return (
                       <tr key={index}>
                         <td>
-                          <span class="text-muted">{index + 1}</span>
+                          <span className="text-muted">{index + 1}</span>
                         </td>
                         <td>{nonFun.name}</td>
                         <td>{data}</td>

@@ -30,11 +30,11 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
           <div className="card-body">
             <form>
               <div className="row">
-                <div class="col">
-                  <div class="form-group">
-                    <label class="form-label">Owner</label>
+                <div className="col">
+                  <div className="form-group">
+                    <label className="form-label">Owner</label>
                     <input
-                      class="form-control bg-primary"
+                      className="form-control bg-primary"
                       disabled={true}
                       placeholder={fromAddress}
                     />
@@ -42,11 +42,11 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
                 </div>
               </div>
               <div className="row">
-                <div class="col">
-                  <div class="form-group">
-                    <label class="form-label">Name</label>
+                <div className="col">
+                  <div className="form-group">
+                    <label className="form-label">Name</label>
                     <input
-                      class="form-control"
+                      className="form-control"
                       placeholder="Phoebe Buffay"
                       value={name}
                       onChange={(val) => setName(val.target.value)}
@@ -55,8 +55,8 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
                 </div>
               </div>
               <div className="my-3 my-md-5">
-                <div class="form-group">
-                  <label class="form-label">Description</label>
+                <div className="form-group">
+                  <label className="form-label">Description</label>
                   <textarea
                     className="form-control"
                     name="description"
