@@ -22,17 +22,19 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
       <div className="container">
         <div className="card d-flex align-items-center p-10 pt-5 mt-auto">
           <div className="col-auto m-5">
-            <i className="fab fa-ethereum fa-2x"></i>
+            <i className="fab fa-ethereum fa-2x text-white"></i>
           </div>
           <div className="card-header">
-            <h3 className="card-title">Create your Collectible Token</h3>
+            <h3 className="card-title text-white">
+              Create your Collectible Token
+            </h3>
           </div>
           <div className="card-body">
             <form>
               <div className="row">
                 <div className="col">
                   <div className="form-group">
-                    <label className="form-label">Owner</label>
+                    <label className="form-label text-white">Owner</label>
                     <input
                       className="form-control bg-primary"
                       disabled={true}
@@ -44,7 +46,7 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
               <div className="row">
                 <div className="col">
                   <div className="form-group">
-                    <label className="form-label">Name</label>
+                    <label className="form-label text-white">Name</label>
                     <input
                       className="form-control"
                       placeholder="Phoebe Buffay"
@@ -56,7 +58,7 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
               </div>
               <div className="my-3 my-md-5">
                 <div className="form-group">
-                  <label className="form-label">Description</label>
+                  <label className="form-label text-white">Description</label>
                   <textarea
                     className="form-control"
                     name="description"

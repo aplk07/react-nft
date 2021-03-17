@@ -17,15 +17,14 @@ export default function MainScreen() {
 
   async function renderData() {
     try {
-      window.ethereum.enable();
       const addr = await web3.eth.getAccounts();
       const nonFungible = await getNFTDetails(
-        "0xbafa36b476ee5a17b69892a1a1283d85983370a4",
+        "0xBafA36b476Ee5a17b69892A1A1283d85983370a4",
         addr[0]
       );
       const tempList = await getNFTURI(
         nonFungible.totalSup,
-        "0xbafa36b476ee5a17b69892a1a1283d85983370a4",
+        "0xBafA36b476Ee5a17b69892A1A1283d85983370a4",
         addr[0]
       );
       setNonFun(nonFungible);
@@ -65,15 +64,22 @@ export default function MainScreen() {
   );
 
   return (
-    <div className="page-main">
+    <div className={`page-main`}>
+      {!activeAddress && (
+        <div className="overlay">
+          <div className="loader" />
+        </div>
+      )}
       <div className="header py-4">
         <div className="container">
           <div className="d-flex">
             <div className="d-flex order-lg-2 ml-auto">
               <div className="dropdown">
                 <span className="ml-2 d-none d-lg-block">
-                  <span className="text-default">Ethereum Wallet</span>
-                  <small className="text-muted d-block mt-1">
+                  <span className="text-default text-white">
+                    Ethereum Wallet
+                  </span>
+                  <small className="text-muted d-block mt-1 text-white">
                     Address: {activeAddress}
                   </small>
                 </span>
@@ -105,7 +111,7 @@ export default function MainScreen() {
                       className="nav-link"
                       activeClassName="active"
                     >
-                      <i className="fa fa-edit"></i> Create Token
+                      <i className="fa fa-edit"></i> Create Patent
                     </NavLink>
                   </li>
                 </ul>
@@ -113,9 +119,8 @@ export default function MainScreen() {
             </div>
           </div>
         </div>
-        <div className="my-3 my-md-5">
-          <Main />
-        </div>
+
+        <Main />
       </BrowserRouter>
     </div>
   );

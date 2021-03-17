@@ -1,5 +1,5 @@
-const CardsToken = artifacts.require("./CardsToken.sol");
+const FilePatent = artifacts.require("./FilePatent.sol");
 
-module.exports = function (deployer){
-    deployer.deploy(CardsToken);
-}
+module.exports = function (deployer) {
+  deployer.deploy(FilePatent);
+};
