@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Accordion, Card } from "react-bootstrap";
 
+import DownArrow from "../assets/down-arrow.svg";
+import UpArrow from "../assets/up-arrow.svg";
+
 export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
-  const uri = "https://ropsten.etherscan.io/token/0x7e40600d3f52ccc62fb94187ac6decb8802c22f3?a=";
+  const [selectedID, setSelectedID] = useState("");
+
+  const uri =
+    "https://ropsten.etherscan.io/token/0x7e40600d3f52ccc62fb94187ac6decb8802c22f3?a=";
+
   return (
     <div className="container">
       <div className="page-header">
@@ -48,6 +55,11 @@ export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
                           className="d-flex align-items-center w-100 border-0 p-0"
                           variant="link"
                           eventKey={tokenName}
+                          onClick={() =>
+                            setSelectedID(
+                              selectedID === tokenName ? "" : tokenName
+                            )
+                          }
                         >
                           <p>
                             <span className="text-muted text-white">
@@ -56,7 +68,17 @@ export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
                           </p>
                           <p className="text-white">{nonFun.name}</p>
                           <p className="text-white">{tokenName} (PTNT) </p>
-                          <a className="text-white" href={uri+tokenId} target="_blank">{tokenId} </a>
+                          <div className="patent-id d-flex justify-content-between">
+                            <a className="text-white" href={uri + tokenId}>
+                              {tokenId}
+                            </a>
+                            <img
+                              src={
+                                tokenName === selectedID ? DownArrow : UpArrow
+                              }
+                              alt="down"
+                            />
+                          </div>
                         </Accordion.Toggle>
                       </Card.Header>
                       <Accordion.Collapse eventKey={tokenName}>

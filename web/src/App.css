@@ -169,8 +169,18 @@
   max-width: 350px;
 }
 .accordion-dropdown p:nth-child(3) {
-  min-width: 380px;
-  max-width: 380px;
+  min-width: 390px;
+  max-width: 390px;
+}
+
+.accordion-dropdown div:nth-child(4) {
+  min-width: 320px;
+  max-width: 320px;
+  padding-right: 20px;
+}
+
+.patent-id img {
+  width: 16px;
 }
 .page-main {
   height: 100vh;
@@ -186,7 +196,8 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 2;
-  cursor: none;
+  /* cursor: none; */
+  pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -216,4 +227,8 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.alert-primary {
+  cursor: pointer;
 }
