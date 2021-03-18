@@ -68,7 +68,9 @@ export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
                             </span>
                           </p>
                           <p className="text-white">{nonFun.name}</p>
-                          <p className="text-white">{tokenName} (PTNT) </p>
+                          <p className="text-white">
+                            {tokenName} ({nonFun.symbol})
+                          </p>
                           <div className="patent-id d-flex justify-content-between">
                             <span className="text-white">{tokenId}</span>
                             <img
