@@ -179,7 +179,8 @@
   padding-right: 20px;
 }
 
-.patent-id img {
+.patent-id img,
+.open-new {
   width: 16px;
 }
 .page-main {
@@ -230,5 +231,12 @@
 }
 
 .alert-primary {
+  cursor: pointer;
+}
+img {
+  cursor: pointer;
+}
+
+.cursor-pointer {
   cursor: pointer;
 }

@@ -3,6 +3,7 @@ import { Accordion, Card } from "react-bootstrap";
 
 import DownArrow from "../assets/down-arrow.svg";
 import UpArrow from "../assets/up-arrow.svg";
+import OpenNew from "../assets/open_new.svg";
 
 export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
   const [selectedID, setSelectedID] = useState("");
@@ -69,9 +70,7 @@ export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
                           <p className="text-white">{nonFun.name}</p>
                           <p className="text-white">{tokenName} (PTNT) </p>
                           <div className="patent-id d-flex justify-content-between">
-                            <a className="text-white" href={uri + tokenId}>
-                              {tokenId}
-                            </a>
+                            <span className="text-white">{tokenId}</span>
                             <img
                               src={
                                 tokenName === selectedID ? DownArrow : UpArrow
@@ -90,6 +89,19 @@ export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
                             Patent Description :
                           </label>
                           <span className="text-white">{tokenDesc}</span>
+                          <br />
+                          <div
+                            className="cursor-pointer"
+                            onClick={() =>
+                              window.open(`${uri}${tokenId}`, "_blank")
+                            }
+                          >
+                            <img src={OpenNew} className="open-new" alt="" />
+                            {"   "}
+                            <span className="text-white">
+                              View on Ethereum scan.io
+                            </span>
+                          </div>
                         </Card.Body>
                       </Accordion.Collapse>
                     </Card>
