@@ -5,11 +5,14 @@ import DownArrow from "../assets/down-arrow.svg";
 import UpArrow from "../assets/up-arrow.svg";
 import OpenNew from "../assets/open_new.svg";
 
-export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
+export default function ProfileScreen({
+  ethereumBalance,
+  nonFun,
+  list,
+  txnHash,
+}) {
   const [selectedID, setSelectedID] = useState("");
-
-  const uri =
-    "https://ropsten.etherscan.io/token/0x7e40600d3f52ccc62fb94187ac6decb8802c22f3?a=";
+  const uri = "https://ropsten.etherscan.io/tx/";
 
   return (
     <div className="container">
@@ -95,7 +98,7 @@ export default function ProfileScreen({ ethereumBalance, nonFun, list }) {
                           <div
                             className="cursor-pointer"
                             onClick={() =>
-                              window.open(`${uri}${tokenId}`, "_blank")
+                              window.open(`${uri}${txnHash[index]}`, "_blank")
                             }
                           >
                             <img src={OpenNew} className="open-new" alt="" />

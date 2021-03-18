@@ -446,7 +446,7 @@ export const createToken = async function (fromAddress, data, update, success) {
   const payload = JSON.stringify(data);
   const contract = new web3.eth.Contract(
     minABI,
-    "0x7E40600D3f52CCc62FB94187ac6DecB8802C22F3"
+    "0x7E40600D3f52CCc62fb94187ac6decb8802c22f3"
   );
   contract.methods
     .awardItem(fromAddress, payload)
@@ -455,6 +455,7 @@ export const createToken = async function (fromAddress, data, update, success) {
       update(hash);
     })
     .then((done) => {
+      console.log(done)
       success(done);
     });
 };
