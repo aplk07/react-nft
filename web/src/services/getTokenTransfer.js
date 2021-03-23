@@ -23,7 +23,7 @@ export const getTokenTransfer = async function (fromAddress, contract) {
             const uri = await getURIData(instanceData.tokenID, contract);
             instanceData.uri = uri;
             instanceData.owner = true;
-            allTransaction.map((val, index) => {
+            allTransaction.map(function (val, index) {
               if (val.contractAddress === contract) {
                 if (Web3.utils.toChecksumAddress(val.from) === fromAddress) {
                   if (instanceData.tokenID === val.tokenID) {

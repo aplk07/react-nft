@@ -1,28 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { Modal, Button } from "react-bootstrap";
+import React, { useState } from "react";
+import { Modal } from "react-bootstrap";
+
 import { shareToken } from "../services/shareToken";
+
 export default function ShareTokenModal({
   status,
   data,
   onCancel,
   fromAddress,
 }) {
-  const [show, setShow] = useState(status);
   const [toAddress, setToAddress] = useState("");
   const [txHash, setTXHash] = useState("");
 
   const updateTransaction = async function (txh) {
     setTXHash(txh);
   };
+
   const { tokenID, tokenName } = data;
   return (
-    <Modal show={show} onHide={() => onCancel(false)} animation={false}>
+    <Modal show={status} onHide={() => onCancel(false)} animation={false}>
       <Modal.Body style={{ backgroundColor: "#202020" }}>
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">Patent ID: {tokenID}</h3>
+        <div className="card">
+          <div className="card-header">
+            <h3 className="card-title">Patent ID: {tokenID}</h3>
           </div>
-          <div class="card-body">Patent Name: {tokenName}</div>
+          <div className="card-body">Patent Name: {tokenName}</div>
           <div className="card-body">
             <div className="form-group">
               <label className="form-label">Share Patent To</label>
@@ -39,12 +41,12 @@ export default function ShareTokenModal({
           </div>
           <button
             type="button"
-            class="btn btn-info"
+            className="btn btn-info"
             onClick={() =>
               shareToken(fromAddress, toAddress, tokenID, updateTransaction)
             }
           >
-            <i class="fa fa-share mr-2"></i>Share
+            <i className="fa fa-share mr-2"></i>Share
           </button>
         </div>
       </Modal.Body>
