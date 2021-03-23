@@ -32,6 +32,7 @@ export const getTokenTransfer = async function (fromAddress, contract) {
                   }
                 }
               }
+              return null;
             });
             ownedPatent.push(instanceData);
           } else if (
@@ -46,6 +47,7 @@ export const getTokenTransfer = async function (fromAddress, contract) {
                   instanceData.sharedFrom = val.from;
                 }
               }
+              return null;
             });
             ownedPatent.push(instanceData);
           }

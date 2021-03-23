@@ -76,7 +76,6 @@ export default function ProfileScreen({ ethereumBalance, fromAddress }) {
                       hash,
                       sharedTo,
                       share,
-                      sharedFrom,
                     } = data;
                     return (
                       <Card key={index}>
@@ -146,7 +145,7 @@ export default function ProfileScreen({ ethereumBalance, fromAddress }) {
                                   });
                                 }}
                               >
-                                <i className="fa fa-share m-2"></i>
+                                <i className="fa fa-share mr-2"></i>
                                 <span className="text-white">Share</span>
                               </div>
                             ) : (
@@ -159,6 +158,12 @@ export default function ProfileScreen({ ethereumBalance, fromAddress }) {
                                   )
                                 }
                               >
+                                <img
+                                  src={OpenNew}
+                                  className="open-new"
+                                  alt=""
+                                />
+                                {"   "}
                                 <span className="text-white">
                                   Shared to {sharedTo}
                                 </span>

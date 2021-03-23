@@ -190,7 +190,7 @@
 
 .overlay {
   position: absolute;
-  height: 100vh;
+  height: 50vh;
   top: 0;
   left: 0;
   right: 0;
@@ -239,4 +239,12 @@ img {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.btn-info {
+  width: 120px;
+}
+
+.alert-modal span {
+  font-size: 12px;
 }
