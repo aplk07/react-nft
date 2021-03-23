@@ -74,10 +74,10 @@ export default function ProfileScreen({ ethereumBalance, fromAddress }) {
                       tokenName,
                       tokenSymbol,
                       hash,
+                      sharedTo,
                       share,
+                      sharedFrom,
                     } = data;
-                    console.log(data);
-
                     return (
                       <Card key={index}>
                         <Card.Header>
@@ -154,19 +154,13 @@ export default function ProfileScreen({ ethereumBalance, fromAddress }) {
                                 className="cursor-pointer"
                                 onClick={() =>
                                   window.open(
-                                    `https://ropsten.etherscan.io/address/${share}`,
+                                    `https://ropsten.etherscan.io/tx/${share}`,
                                     "_blank"
                                   )
                                 }
                               >
-                                <img
-                                  src={OpenNew}
-                                  className="open-new"
-                                  alt=""
-                                />
-                                {"   "}
                                 <span className="text-white">
-                                  Shared to {share}
+                                  Shared to {sharedTo}
                                 </span>
                               </div>
                             )}
