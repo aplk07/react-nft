@@ -14,13 +14,13 @@ export default function ShareTokenModal({
   const updateTransaction = async function (txh) {
     setTXHash(txh);
   };
-  const { tokenId, tokenName } = data;
+  const { tokenID, tokenName } = data;
   return (
     <Modal show={show} onHide={() => onCancel(false)} animation={false}>
       <Modal.Body style={{ backgroundColor: "#202020" }}>
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Patent ID: {tokenId}</h3>
+            <h3 class="card-title">Patent ID: {tokenID}</h3>
           </div>
           <div class="card-body">Patent Name: {tokenName}</div>
           <div className="card-body">
@@ -41,7 +41,7 @@ export default function ShareTokenModal({
             type="button"
             class="btn btn-info"
             onClick={() =>
-              shareToken(fromAddress, toAddress, tokenId, updateTransaction)
+              shareToken(fromAddress, toAddress, tokenID, updateTransaction)
             }
           >
             <i class="fa fa-share mr-2"></i>Share

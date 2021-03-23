@@ -24,11 +24,6 @@ export const shareToken = async function (
           name: "tokenId",
           type: "uint256",
         },
-        {
-          internalType: "bytes",
-          name: "_data",
-          type: "bytes",
-        },
       ],
       name: "safeTransferFrom",
       outputs: [],
@@ -40,7 +35,6 @@ export const shareToken = async function (
     minABI,
     "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
   );
-  //   console.log(fromAddress, toAddress, tokenID);
   contract.methods
     .safeTransferFrom(fromAddress, toAddress, tokenID)
     .send({ from: fromAddress })
