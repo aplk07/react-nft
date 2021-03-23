@@ -3,9 +3,7 @@ import { BrowserRouter, Switch, Route, NavLink } from "react-router-dom";
 
 import { web3 } from "./constants/constants";
 
-import { getNFTDetails } from "./services/getNFTDetails";
-import { getNFTURI } from "./services/getNFTURI";
-import { getTransactionDetails } from "./services/getTransactionDetails";
+import { getTokenTransfer } from "./services/getTokenTransfer";
 
 import TokenCreationScreen from "./screens/CreateTokenScreen";
 import ProfileScreen from "./screens/ProfileScreen";
@@ -13,29 +11,16 @@ import ProfileScreen from "./screens/ProfileScreen";
 export default function MainScreen() {
   const [activeAddress, setActiveAddress] = useState("");
   const [bal, setBal] = useState(0);
-  const [nonFun, setNonFun] = useState(0);
   const [list, setList] = useState([]);
-  const [transactionList, setTransactionList] = useState([]);
   async function renderData() {
     try {
       const addr = await web3.eth.getAccounts();
-      const nonFungible = await getNFTDetails(
-        "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3",
-        addr[0]
-      );
-      const tempList = await getNFTURI(
-        nonFungible.totalSup,
-        "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3",
-        addr[0]
-      );
-      const transactionHashes = await getTransactionDetails(
-        activeAddress,
+      const ownedPatent = await getTokenTransfer(
+        activeAddress[0],
         "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
       );
-      setNonFun(nonFungible);
-      setList(tempList);
+      setList(ownedPatent);
       setActiveAddress(addr);
-      setTransactionList(transactionHashes);
       setBal(
         parseFloat(
           web3.utils.fromWei(await web3.eth.getBalance(addr[0]), "ether")
@@ -50,17 +35,16 @@ export default function MainScreen() {
     window.ethereum.on("accountsChanged", function () {
       renderData();
     });
-  }, []);
+  });
 
   const Main = () => (
     <Switch>
       <Route exact path="/">
         <ProfileScreen
           ethereumBalance={bal}
-          nonFun={nonFun}
-          list={list}
-          txnHash={transactionList}
-          tokenAddress="0x7E40600D3f52CCc62FB94187ac6DecB8802C22F3"
+          fromAddress={activeAddress[0]}
+          tokens={list}
+          tokenAddress="0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
         />
       </Route>
 

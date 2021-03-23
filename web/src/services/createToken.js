@@ -446,7 +446,7 @@ export const createToken = async function (fromAddress, data, update, success) {
   const payload = JSON.stringify(data);
   const contract = new web3.eth.Contract(
     minABI,
-    "0x7E40600D3f52CCc62fb94187ac6decb8802c22f3"
+    "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
   );
   contract.methods
     .awardItem(fromAddress, payload)

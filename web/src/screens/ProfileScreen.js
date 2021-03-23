@@ -4,15 +4,18 @@ import { Accordion, Card } from "react-bootstrap";
 import DownArrow from "../assets/down-arrow.svg";
 import UpArrow from "../assets/up-arrow.svg";
 import OpenNew from "../assets/open_new.svg";
+import ShareTokenModal from "./ShareTokenModal";
 
 export default function ProfileScreen({
   ethereumBalance,
-  nonFun,
-  list,
-  txnHash,
+  fromAddress,
+  tokens,
 }) {
   const [selectedID, setSelectedID] = useState("");
-  const uri = "https://ropsten.etherscan.io/tx/";
+  const [shareModalVisible, setShareModalVisible] = useState(false);
+  const [shareData, setShareData] = useState({});
+  const [tokenData, setTokenData] = useState(tokens)
+  const url = "https://ropsten.etherscan.io/tx/";
 
   return (
     <div className="container">
@@ -48,20 +51,18 @@ export default function ProfileScreen({
                 </thead>
               </table>
               <Accordion className="accordion-dropdown">
-                {list.map((data, index) => {
-                  const tokenName = JSON.parse(data).name;
-                  const tokenDesc = JSON.parse(data).description;
-                  const tokenId = JSON.parse(data).id;
+                {tokenData.map((data, index) => {
+                  const { uri, tokenId, tokenName, tokenSymbol, hash } = data;
                   return (
                     <Card key={index}>
                       <Card.Header>
                         <Accordion.Toggle
                           className="d-flex align-items-center w-100 border-0 p-0"
                           variant="link"
-                          eventKey={tokenName}
+                          eventKey={uri.name}
                           onClick={() =>
                             setSelectedID(
-                              selectedID === tokenName ? "" : tokenName
+                              selectedID === uri.name ? "" : uri.name
                             )
                           }
                         >
@@ -70,35 +71,37 @@ export default function ProfileScreen({
                               {index + 1}
                             </span>
                           </p>
-                          <p className="text-white">{nonFun.name}</p>
+                          <p className="text-white">{tokenName}</p>
                           <p className="text-white">
-                            {tokenName} ({nonFun.symbol})
+                            {uri.name} ({tokenSymbol})
                           </p>
                           <div className="patent-id d-flex justify-content-between">
-                            <span className="text-white">{tokenId}</span>
+                            <span className="text-white">{}</span>
                             <img
                               src={
-                                tokenName === selectedID ? DownArrow : UpArrow
+                                uri.tokenName === selectedID
+                                  ? DownArrow
+                                  : UpArrow
                               }
                               alt="down"
                             />
                           </div>
                         </Accordion.Toggle>
                       </Card.Header>
-                      <Accordion.Collapse eventKey={tokenName}>
+                      <Accordion.Collapse eventKey={uri.name}>
                         <Card.Body>
                           <label className="text-white">Patent Name : </label>
-                          <span className="text-white"> {tokenName}</span>
+                          <span className="text-white"> {uri.name}</span>
                           <br />
                           <label className="text-white">
                             Patent Description :
                           </label>
-                          <span className="text-white">{tokenDesc}</span>
+                          <span className="text-white">{uri.description}</span>
                           <br />
                           <div
                             className="cursor-pointer"
                             onClick={() =>
-                              window.open(`${uri}${txnHash[index]}`, "_blank")
+                              window.open(`${url}${hash}`, "_blank")
                             }
                           >
                             <img src={OpenNew} className="open-new" alt="" />
@@ -106,6 +109,16 @@ export default function ProfileScreen({
                             <span className="text-white">
                               View on Ethereum scan.io
                             </span>
+                          </div>
+                          <div
+                            className="cursor-pointer mr-0"
+                            onClick={() => {
+                              setShareModalVisible(true);
+                              setShareData({ tokenId, tokenName: uri.name });
+                            }}
+                          >
+                            <i className="fa fa-share m-2"></i>
+                            <span className="text-white">Share</span>
                           </div>
                         </Card.Body>
                       </Accordion.Collapse>
@@ -117,6 +130,14 @@ export default function ProfileScreen({
           </div>
         </div>
       </div>
+      {shareModalVisible ? (
+        <ShareTokenModal
+          fromAddress={fromAddress}
+          status={shareModalVisible}
+          data={shareData}
+          onCancel={(state) => setShareModalVisible(state)}
+        />
+      ) : null}
     </div>
   );
 }
