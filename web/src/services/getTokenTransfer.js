@@ -27,20 +27,27 @@ export const getTokenTransfer = async function (fromAddress, contract) {
               if (val.contractAddress === contract) {
                 if (Web3.utils.toChecksumAddress(val.from) === fromAddress) {
                   if (instanceData.tokenID === val.tokenID) {
-                    instanceData.share = val.to;
+                    instanceData.share = val.hash;
                   }
                 }
               }
             });
             ownedPatent.push(instanceData);
+          } else if (
+            Web3.utils.toChecksumAddress(instanceData.to) === fromAddress
+          ) {
+            const uri = await getURIData(instanceData.tokenID, contract);
+            instanceData.uri = uri;
+            instanceData.owner = false;
+            allTransaction.map((val, index) => {
+              if (val.contractAddress === contract) {
+                if (instanceData.tokenID === val.tokenID) {
+                  instanceData.sharedFrom = val.from;
+                }
+              }
+            });
+            ownedPatent.push(instanceData);
           }
-          // if (Web3.utils.toChecksumAddress(instanceData.from) === fromAddress) {
-          //   const uri = await getURIData(instanceData.tokenID, contract);
-          //   instanceData.uri = uri;
-          //   instanceData.owner = false;
-          //   instanceData.share = "";
-          //   ownedPatent.push(instanceData);
-          // }
         }
       }
     });

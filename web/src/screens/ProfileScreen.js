@@ -76,115 +76,108 @@ export default function ProfileScreen({ ethereumBalance, fromAddress }) {
                       hash,
                       owner,
                       share,
+                      sharedFrom,
                     } = data;
-                    if (owner) {
-                      return (
-                        <Card key={index}>
-                          <Card.Header>
-                            <Accordion.Toggle
-                              className="d-flex align-items-center w-100 border-0 p-0"
-                              variant="link"
-                              eventKey={uri.name}
+                    return (
+                      <Card key={index}>
+                        <Card.Header>
+                          <Accordion.Toggle
+                            className="d-flex align-items-center w-100 border-0 p-0"
+                            variant="link"
+                            eventKey={uri.name}
+                            onClick={() =>
+                              setSelectedID(
+                                selectedID === uri.name ? "" : uri.name
+                              )
+                            }
+                          >
+                            <p>
+                              <span className="text-muted text-white">
+                                {index + 1}
+                              </span>
+                            </p>
+                            <p className="text-white">{tokenName}</p>
+                            <p className="text-white">
+                              {uri.name} ({tokenSymbol})
+                            </p>
+                            <div className="patent-id d-flex justify-content-between">
+                              <span className="text-white">{tokenID}</span>
+                              <img
+                                src={
+                                  uri.tokenName === selectedID
+                                    ? DownArrow
+                                    : UpArrow
+                                }
+                                alt="down"
+                              />
+                            </div>
+                          </Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey={uri.name}>
+                          <Card.Body>
+                            <label className="text-white">Patent Name : </label>
+                            <span className="text-white"> {uri.name}</span>
+                            <br />
+                            <label className="text-white">
+                              Patent Description :
+                            </label>
+                            <span className="text-white">
+                              {uri.description}
+                            </span>
+                            <br />
+                            <div
+                              className="cursor-pointer"
                               onClick={() =>
-                                setSelectedID(
-                                  selectedID === uri.name ? "" : uri.name
-                                )
+                                window.open(`${url}${hash}`, "_blank")
                               }
                             >
-                              <p>
-                                <span className="text-muted text-white">
-                                  {index + 1}
-                                </span>
-                              </p>
-                              <p className="text-white">{tokenName}</p>
-                              <p className="text-white">
-                                {uri.name} ({tokenSymbol})
-                              </p>
-                              <div className="patent-id d-flex justify-content-between">
-                                <span className="text-white">{tokenID}</span>
-                                <img
-                                  src={
-                                    uri.tokenName === selectedID
-                                      ? DownArrow
-                                      : UpArrow
-                                  }
-                                  alt="down"
-                                />
-                              </div>
-                            </Accordion.Toggle>
-                          </Card.Header>
-                          <Accordion.Collapse eventKey={uri.name}>
-                            <Card.Body>
-                              <label className="text-white">
-                                Patent Name :{" "}
-                              </label>
-                              <span className="text-white"> {uri.name}</span>
-                              <br />
-                              <label className="text-white">
-                                Patent Description :
-                              </label>
+                              <img src={OpenNew} className="open-new" alt="" />
+                              {"   "}
                               <span className="text-white">
-                                {uri.description}
+                                View on Ethereum scan.io
                               </span>
-                              <br />
+                            </div>
+                            {!share ? (
+                              <div
+                                className="cursor-pointer mr-0"
+                                onClick={() => {
+                                  setShareModalVisible(true);
+                                  setShareData({
+                                    tokenID,
+                                    tokenName: uri.name,
+                                  });
+                                }}
+                              >
+                                <i className="fa fa-share m-2"></i>
+                                <span className="text-white">Share</span>
+                                <div className="card">
+                                  {!owner ? (
+                                    <span className="text-white">
+                                      Shared By: {sharedFrom}
+                                    </span>
+                                  ) : null}
+                                </div>
+                              </div>
+                            ) : (
                               <div
                                 className="cursor-pointer"
                                 onClick={() =>
-                                  window.open(`${url}${hash}`, "_blank")
+                                  window.open(
+                                    `https://ropsten.etherscan.io/tx/${share}`,
+                                    "_blank"
+                                  )
                                 }
                               >
-                                <img
-                                  src={OpenNew}
-                                  className="open-new"
-                                  alt=""
-                                />
-                                {"   "}
                                 <span className="text-white">
-                                  View on Ethereum scan.io
+                                  Shared To: {share}
                                 </span>
                               </div>
-                              {!share ? (
-                                <div
-                                  className="cursor-pointer mr-0"
-                                  onClick={() => {
-                                    setShareModalVisible(true);
-                                    setShareData({
-                                      tokenID,
-                                      tokenName: uri.name,
-                                    });
-                                  }}
-                                >
-                                  <i className="fa fa-share m-2"></i>
-                                  <span className="text-white">Share</span>
-                                </div>
-                              ) : (
-                                <div
-                                  className="cursor-pointer"
-                                  onClick={() =>
-                                    window.open(
-                                      `https://ropsten.etherscan.io/address/${share}`,
-                                      "_blank"
-                                    )
-                                  }
-                                >
-                                  <img
-                                    src={OpenNew}
-                                    className="open-new"
-                                    alt=""
-                                  />
-                                  {"   "}
-                                  <span className="text-white">
-                                    Shared to {share}
-                                  </span>
-                                </div>
-                              )}
-                            </Card.Body>
-                          </Accordion.Collapse>
-                        </Card>
-                      );
-                    } else {
-                      return null;
-                    }
+                            )}
+                            {}
+                          </Card.Body>
+                        </Accordion.Collapse>
+                      </Card>
+                    );
                   })}
                 </Accordion>
               )}

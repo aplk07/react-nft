@@ -455,7 +455,6 @@ export const createToken = async function (fromAddress, data, update, success) {
       update(hash);
     })
     .then((done) => {
-      console.log(done)
       success(done);
     });
 };
