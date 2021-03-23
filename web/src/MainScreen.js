@@ -3,23 +3,15 @@ import { BrowserRouter, Switch, Route, NavLink } from "react-router-dom";
 
 import { web3 } from "./constants/constants";
 
-import { getTokenTransfer } from "./services/getTokenTransfer";
-
 import TokenCreationScreen from "./screens/CreateTokenScreen";
 import ProfileScreen from "./screens/ProfileScreen";
 
 export default function MainScreen() {
   const [activeAddress, setActiveAddress] = useState("");
   const [bal, setBal] = useState(0);
-  const [list, setList] = useState([]);
   async function renderData() {
     try {
       const addr = await web3.eth.getAccounts();
-      const ownedPatent = await getTokenTransfer(
-        activeAddress[0],
-        "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
-      );
-      setList(ownedPatent);
       setActiveAddress(addr);
       setBal(
         parseFloat(
@@ -35,7 +27,7 @@ export default function MainScreen() {
     window.ethereum.on("accountsChanged", function () {
       renderData();
     });
-  });
+  }, []);
 
   const Main = () => (
     <Switch>
@@ -43,7 +35,6 @@ export default function MainScreen() {
         <ProfileScreen
           ethereumBalance={bal}
           fromAddress={activeAddress[0]}
-          tokens={list}
           tokenAddress="0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
         />
       </Route>

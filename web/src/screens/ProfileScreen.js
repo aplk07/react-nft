@@ -1,22 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Accordion, Card } from "react-bootstrap";
+
+import { web3 } from "../constants/constants";
 
 import DownArrow from "../assets/down-arrow.svg";
 import UpArrow from "../assets/up-arrow.svg";
 import OpenNew from "../assets/open_new.svg";
 import ShareTokenModal from "./ShareTokenModal";
+import { getTokenTransfer } from "../services/getTokenTransfer";
 
-export default function ProfileScreen({
-  ethereumBalance,
-  fromAddress,
-  tokens,
-}) {
+export default function ProfileScreen({ ethereumBalance, fromAddress }) {
   const [selectedID, setSelectedID] = useState("");
   const [shareModalVisible, setShareModalVisible] = useState(false);
   const [shareData, setShareData] = useState({});
-  const [tokenData, setTokenData] = useState(tokens)
+  const [list, setList] = useState([]);
   const url = "https://ropsten.etherscan.io/tx/";
 
+  const renderPatents = useCallback(async () => {
+    const addr = await web3.eth.getAccounts();
+    const ownedPatent = await getTokenTransfer(
+      addr[0],
+      "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
+    );
+    console.log(ownedPatent);
+  }, []);
+  useEffect(() => {
+    renderPatents();
+  }, [renderPatents, list]);
   return (
     <div className="container">
       <div className="page-header">
@@ -51,7 +61,8 @@ export default function ProfileScreen({
                 </thead>
               </table>
               <Accordion className="accordion-dropdown">
-                {tokenData.map((data, index) => {
+                {list.map((data, index) => {
+                  // console.log/
                   const { uri, tokenId, tokenName, tokenSymbol, hash } = data;
                   return (
                     <Card key={index}>

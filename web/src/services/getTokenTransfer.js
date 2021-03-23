@@ -1,5 +1,4 @@
 import Web3 from "web3";
-import { web3 } from "../constants/constants";
 
 import { getURIData } from "./getURIData";
 
