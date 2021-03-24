@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 
-// import { transferPatent } from "../services/transferPatent";
+import { transferPatent } from "../services/transferPatent";
 import { sharePatent } from "../services/sharePatent";
 
 export default function TransferPatentModal({
   status,
   data,
+  type,
   onCancel,
   fromAddress,
 }) {
@@ -63,7 +64,7 @@ export default function TransferPatentModal({
           <div className="card-body">
             <div className="form-group">
               <label className="form-label text-white">
-                Transfer Patent To
+                {type === "transfer" ? "Transfer" : "Share"} Patent To
               </label>
               <div className="input-icon mb-3">
                 <input
@@ -78,16 +79,43 @@ export default function TransferPatentModal({
             </div>
           </div>
           <div className="d-flex align-items-center justify-content-center">
-            <button
-              type="button"
-              className="btn btn-info"
-              disabled={txHash}
-              onClick={() =>
-                sharePatent(fromAddress, toAddress, tokenID, setTXHash)
-              }
-            >
-              <i className="fa fa-transfer mr-2"></i>Transfer
-            </button>
+            {type === "transfer" ? (
+              <button
+                type="button"
+                className="btn btn-info"
+                disabled={txHash}
+                onClick={() =>
+                  transferPatent(
+                    fromAddress,
+                    toAddress,
+                    tokenID,
+                    setTXHash,
+                    setTXData
+                  )
+                }
+              >
+                <i className="fa fa-share mr-2"></i>
+                Transfer
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="btn btn-info"
+                disabled={txHash}
+                onClick={() =>
+                  sharePatent(
+                    fromAddress,
+                    toAddress,
+                    tokenID,
+                    setTXHash,
+                    setTXData
+                  )
+                }
+              >
+                <i className="fa fa-share-alt mr-2"></i>
+                Share
+              </button>
+            )}
           </div>
         </div>
       </Modal.Body>
