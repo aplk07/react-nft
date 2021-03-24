@@ -29,6 +29,7 @@ export default function ProfileScreen({
       "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
     );
     setList(ownedPatent);
+    console.log(ownedPatent);
   }
 
   useEffect(() => {
@@ -84,7 +85,6 @@ export default function ProfileScreen({
                       transferTo,
                       transfer,
                     } = data;
-                    console.log("data", tokenID, transfer);
                     return (
                       <Card key={index}>
                         <Card.Header>

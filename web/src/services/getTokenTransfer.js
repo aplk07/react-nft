@@ -11,9 +11,10 @@ export const getTokenTransfer = async function (fromAddress, contract) {
       "&startblock=0&endblock=999999999&sort=asc&apikey=U135AAK1Q682YD2SA98SMJC5JX9RRTS129"
   )
     .then((response) => response.json())
-    .then((data, index) => {
+    .then(async (data, index) => {
       const allTransaction = data.result;
       const found = [];
+      const sharedAsOwner = [];
       allTransaction.map((value, index) => {
         if (value.contractAddress === contract) {
           if (Web3.utils.toChecksumAddress(value.to) === fromAddress) {
@@ -25,13 +26,17 @@ export const getTokenTransfer = async function (fromAddress, contract) {
         }
       });
 
-      found.forEach((val, index) => {
-        if (Web3.utils.toChecksumAddress(val.to) === fromAddress) {
-          const uri = getURIData(val.tokenID, contract);
-          val.uri = uri;
-          ownedPatent.push(val);
-        }
-      });
+      await Promise.all(
+        found.map(async (val, index) => {
+          if (Web3.utils.toChecksumAddress(val.to) === fromAddress) {
+            const uri = await getURIData(val.tokenID, contract).then(
+              (data) => data
+            );
+            val.uri = uri;
+            ownedPatent.push(val);
+          }
+        })
+      );
 
       // // for (let i = 0; i < allTransaction.length; i++) {
       // //   const instanceData = allTransaction[i];
@@ -75,6 +80,5 @@ export const getTokenTransfer = async function (fromAddress, contract) {
       // //   }
       // }
     });
-  console.log(ownedPatent);
   return ownedPatent;
 };
