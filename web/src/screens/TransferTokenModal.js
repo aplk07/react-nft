@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 
-import { transferPatent } from "../services/transferPatent";
+// import { transferPatent } from "../services/transferPatent";
 import { sharePatent } from "../services/sharePatent";
 
 export default function TransferPatentModal({
@@ -12,6 +12,15 @@ export default function TransferPatentModal({
 }) {
   const [toAddress, setToAddress] = useState("");
   const [txHash, setTXHash] = useState("");
+  const [txData, setTXData] = useState(undefined);
+
+  // const updateTransaction = function (txh) {
+  //   setTXHash(txh);
+  // };
+
+  // const transactionStatus = async function (data) {
+  //   setTXData(data);
+  // };
 
   const { tokenID, tokenName } = data;
   return (
@@ -22,17 +31,29 @@ export default function TransferPatentModal({
       centered
     >
       <Modal.Body style={{ backgroundColor: "#202020" }}>
-        {txHash && (
-          <div
-            className="alert alert-icon alert-primary alert-modal d-flex"
-            role="alert"
-            onClick={() =>
-              window.open(`https://ropsten.etherscan.io/tx/${txHash}`, "_blank")
-            }
-          >
-            <i className="fe fe-bell" aria-hidden="true"></i>
-            <span> {txHash}</span>
+        {txData ? (
+          <div className="m-4 position-absolute">
+            <div className="alert alert-icon alert-success" role="alert">
+              <i className="fe fe-check mr-2" aria-hidden="true"></i>
+              {txData.status ? "Token Created Successfully" : "Failure"}
+            </div>
           </div>
+        ) : (
+          txHash.length > 0 && (
+            <div
+              className="alert alert-primary alert-modal d-flex align-items-center p-2"
+              role="alert"
+              onClick={() =>
+                window.open(
+                  `https://ropsten.etherscan.io/tx/${txHash}`,
+                  "_blank"
+                )
+              }
+            >
+              <i className="fe fe-bell mr-2" aria-hidden="true"></i>
+              <span> {txHash}</span>
+            </div>
+          )
         )}
         <div className="card">
           <div className="card-header">
@@ -41,7 +62,9 @@ export default function TransferPatentModal({
           <div className="card-body text-white">Patent Name: {tokenName}</div>
           <div className="card-body">
             <div className="form-group">
-              <label className="form-label text-white">Share Patent To</label>
+              <label className="form-label text-white">
+                Transfer Patent To
+              </label>
               <div className="input-icon mb-3">
                 <input
                   type="text"
@@ -63,7 +86,7 @@ export default function TransferPatentModal({
                 sharePatent(fromAddress, toAddress, tokenID, setTXHash)
               }
             >
-              <i className="fa fa-share mr-2"></i>Share
+              <i className="fa fa-transfer mr-2"></i>Transfer
             </button>
           </div>
         </div>

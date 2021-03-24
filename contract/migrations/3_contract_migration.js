@@ -1,4 +1,4 @@
-const SharePatent = artifacts.require("SharePatent");
+const TransferPatent = artifacts.require("TransferPatent");
 module.exports = function (deployer) {
-  deployer.deploy(SharePatent);
+  deployer.deploy(TransferPatent);
 };

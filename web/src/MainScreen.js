@@ -9,6 +9,7 @@ import ProfileScreen from "./screens/ProfileScreen";
 export default function MainScreen() {
   const [activeAddress, setActiveAddress] = useState("");
   const [bal, setBal] = useState(0);
+
   async function renderData() {
     try {
       const addr = await web3.eth.getAccounts();
@@ -22,6 +23,7 @@ export default function MainScreen() {
       console.log(err);
     }
   }
+
   useEffect(() => {
     renderData();
     window.ethereum.on("accountsChanged", function () {
@@ -36,6 +38,9 @@ export default function MainScreen() {
           ethereumBalance={bal}
           fromAddress={activeAddress[0]}
           tokenAddress="0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
+          updateChange={() => {
+            renderData();
+          }}
         />
       </Route>
 

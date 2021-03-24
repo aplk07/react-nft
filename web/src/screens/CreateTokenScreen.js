@@ -7,13 +7,16 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
   const [description, setDescription] = useState("");
   const [txHash, setTXHash] = useState("");
   const [txData, setTXData] = useState(undefined);
-  const updateTransaction = async function (txh) {
+
+  const updateTransaction = function (txh) {
     setTXHash(txh);
   };
+
   const transactionStatus = async function (data) {
     setTXData(data);
     updateChange();
   };
+
   return (
     <div className="container">
       <div className="page-header">
@@ -96,23 +99,25 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
                 {txData.status ? "Token Created Successfully" : "Failure"}
               </div>
             </div>
-          ) : txHash.length > 0 ? (
-            <div className="m-4 position-absolute">
-              <div
-                className="alert alert-icon alert-primary"
-                role="alert"
-                onClick={() =>
-                  window.open(
-                    `https://ropsten.etherscan.io/tx/${txHash}`,
-                    "_blank"
-                  )
-                }
-              >
-                <i className="fe fe-bell mr-2" aria-hidden="true"></i>
-                {txHash}
+          ) : (
+            txHash.length > 0 && (
+              <div className="m-4 position-absolute">
+                <div
+                  className="alert alert-icon alert-primary"
+                  role="alert"
+                  onClick={() =>
+                    window.open(
+                      `https://ropsten.etherscan.io/tx/${txHash}`,
+                      "_blank"
+                    )
+                  }
+                >
+                  <i className="fe fe-bell mr-2" aria-hidden="true"></i>
+                  {txHash}
+                </div>
               </div>
-            </div>
-          ) : null}
+            )
+          )}
         </div>
       </div>
     </div>

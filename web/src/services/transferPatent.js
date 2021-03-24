@@ -4,7 +4,8 @@ export const transferPatent = async function (
   fromAddress,
   toAddress,
   tokenID,
-  update
+  update,
+  success
 ) {
   const minABI = [
     {
@@ -42,6 +43,6 @@ export const transferPatent = async function (
       update(hash);
     })
     .then((done) => {
-      console.log(done);
+      success(done);
     });
 };

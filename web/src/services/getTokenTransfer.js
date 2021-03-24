@@ -3,7 +3,7 @@ import Web3 from "web3";
 import { getURIData } from "./getURIData";
 
 export const getTokenTransfer = async function (fromAddress, contract) {
-  const sourceAddress = "0x0000000000000000000000000000000000000000";
+  // const sourceAddress = "0x0000000000000000000000000000000000000000";
   const ownedPatent = [];
   await fetch(
     "https://api-ropsten.etherscan.io/api?module=account&action=tokennfttx&address=" +
@@ -75,5 +75,6 @@ export const getTokenTransfer = async function (fromAddress, contract) {
       // //   }
       // }
     });
+  console.log(ownedPatent);
   return ownedPatent;
 };
