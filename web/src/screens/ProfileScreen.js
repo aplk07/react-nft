@@ -19,6 +19,7 @@ export default function ProfileScreen({
   const [transferModalVisible, setTransferModalVisible] = useState(false);
   const [transferData, setTransferData] = useState({});
   const [list, setList] = useState(undefined);
+  const baseAddress = "0x0000000000000000000000000000000000000000";
 
   const url = "https://ropsten.etherscan.io/tx/";
 
@@ -29,7 +30,6 @@ export default function ProfileScreen({
       "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
     );
     setList(ownedPatent);
-    console.log(ownedPatent);
   }
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function ProfileScreen({
         <div className="col-12">
           <div className="card">
             <div className="card-header">
-              <h3 className="card-title text-white">Your Patents</h3>
+              <h3 className="card-title text-white">Patent Holding</h3>
             </div>
             <div className="table-responsive pb-0">
               <table className="table card-table table-vcenter text-nowrap">
@@ -82,8 +82,7 @@ export default function ProfileScreen({
                       tokenName,
                       tokenSymbol,
                       hash,
-                      transferTo,
-                      transfer,
+                      from
                     } = data;
                     return (
                       <Card key={index}>
@@ -138,7 +137,42 @@ export default function ProfileScreen({
                                 View on Ethereum scan.io
                               </span>
                             </div>
-                            {!transfer ? (
+                            {from === baseAddress ? (
+                              <div
+                                className="cursor-pointer mr-0"
+                                onClick={() => {
+                                  setTransferModalVisible(true);
+                                  setTransferData({
+                                    tokenID,
+                                    tokenName: uri.name,
+                                  });
+                                }}
+                              >
+                                <i className="fa fa-share mr-2"></i>
+                                <span className="text-white">Transfer</span>
+                              </div>
+                            ) : (
+                              <div
+                                className="cursor-pointer"
+                                onClick={() =>
+                                  window.open(
+                                    `https://ropsten.etherscan.io/tx/${hash}`,
+                                    "_blank"
+                                  )
+                                }
+                              >
+                                <img
+                                  src={OpenNew}
+                                  className="open-new"
+                                  alt=""
+                                />
+                                {"   "}
+                                <span className="text-white">
+                                  Transfered from {from}
+                                </span>
+                              </div>
+                            )}
+                            {/* {!transfer ? (
                               <div
                                 className="cursor-pointer mr-0"
                                 onClick={() => {
@@ -169,10 +203,10 @@ export default function ProfileScreen({
                                 />
                                 {"   "}
                                 <span className="text-white">
-                                  Transfer to {transferTo}
+                                  Transfered to {transferTo}
                                 </span>
                               </div>
-                            )}
+                            )} */}
                           </Card.Body>
                         </Accordion.Collapse>
                       </Card>

@@ -13,21 +13,24 @@ export const getTokenTransfer = async function (fromAddress, contract) {
     .then((response) => response.json())
     .then(async (data, index) => {
       const allTransaction = data.result;
-      const found = [];
-      const sharedAsOwner = [];
-      allTransaction.map((value, index) => {
-        if (value.contractAddress === contract) {
-          if (Web3.utils.toChecksumAddress(value.to) === fromAddress) {
-            const temp = allTransaction.reduce((previous, current) =>
-              current.tokenID === value.tokenID ? current : previous
-            );
-            found.push(temp);
-          }
-        }
+      const validList = [];
+      const currentList = allTransaction.filter((transaction) => {
+        return (
+          transaction.contractAddress === contract &&
+          (Web3.utils.toChecksumAddress(transaction.to) === fromAddress ||
+            Web3.utils.toChecksumAddress(transaction.from) === fromAddress)
+        );
       });
+      const unique = (value, index, self) => {
+        return self.indexOf(value) === index;
+      };
+      const tokens = currentList.map((val) => val.tokenID).filter(unique);
+      tokens
+        .map((ins) => currentList.map((el) => el.tokenID).lastIndexOf(ins))
+        .map((validIndexes) => validList.push(currentList[validIndexes]));
 
       await Promise.all(
-        found.map(async (val, index) => {
+        validList.map(async (val, index) => {
           if (Web3.utils.toChecksumAddress(val.to) === fromAddress) {
             const uri = await getURIData(val.tokenID, contract).then(
               (data) => data
@@ -37,48 +40,6 @@ export const getTokenTransfer = async function (fromAddress, contract) {
           }
         })
       );
-
-      // // for (let i = 0; i < allTransaction.length; i++) {
-      // //   const instanceData = allTransaction[i];
-      // //   if (instanceData.contractAddress === contract) {
-      // //     if (Web3.utils.toChecksumAddress(instanceData.to) === fromAddress) {
-      // //       for (let j = i + 1; j < allTransaction.length; j++) {
-      // //         const instance2 = allTransaction[j];
-      // //         if (instanceData.tokenID === instance2.tokenID) {
-      // //           console.log(instanceData.from, instanceData.to);
-      // //         }
-      // //       }
-      // //       // instanceData.owner = true;
-      // //       // allTransaction.map(function (val, index) {
-      // //       //   if (val.contractAddress === contract) {
-      // //       //     if (Web3.utils.toChecksumAddress(val.from) === fromAddress) {
-      // //       //       if (instanceData.tokenID === val.tokenID) {
-      // //       //         instanceData.share = val.hash;
-      // //       //         instanceData.sharedTo = val.to;
-      // //       //       }
-      // //       //     }
-      // //       //   }
-      // //       //   return null;
-      // //       // });
-      // //       // ownedPatent.push(instanceData);
-      // //     }
-      // //     // else if (
-      // //     //   Web3.utils.toChecksumAddress(instanceData.to) === fromAddress
-      // //     // ) {
-
-      // //     //   instanceData.owner = false;
-      // //     //   allTransaction.map((val, index) => {
-      // //     //     if (val.contractAddress === contract) {
-      // //     //       if (instanceData.tokenID === val.tokenID) {
-      // //     //         instanceData.sharedFrom = val.from;
-      // //     //       }
-      // //     //     }
-      // //     //     return null;
-      // //     //   });
-      // //     //   ownedPatent.push(instanceData);
-      // //     // }
-      // //   }
-      // }
     });
   return ownedPatent;
 };
