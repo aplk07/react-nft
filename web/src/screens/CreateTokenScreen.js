@@ -100,21 +100,23 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
               </div>
             </div>
           ) : (
-            <div className="m-4 position-absolute">
-              <div
-                className="alert alert-icon alert-primary"
-                role="alert"
-                onClick={() =>
-                  window.open(
-                    `https://ropsten.etherscan.io/tx/${txHash}`,
-                    "_blank"
-                  )
-                }
-              >
-                <i className="fe fe-bell mr-2" aria-hidden="true"></i>
-                {txHash}
+            txHash.length > 0 && (
+              <div className="m-4 position-absolute">
+                <div
+                  className="alert alert-icon alert-primary"
+                  role="alert"
+                  onClick={() =>
+                    window.open(
+                      `https://ropsten.etherscan.io/tx/${txHash}`,
+                      "_blank"
+                    )
+                  }
+                >
+                  <i className="fe fe-bell mr-2" aria-hidden="true"></i>
+                  {txHash}
+                </div>
               </div>
-            </div>
+            )
           )}
         </div>
       </div>

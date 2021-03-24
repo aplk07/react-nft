@@ -38,16 +38,21 @@ export default function TransferTokenModal({
             </div>
           </div>
         ) : (
-          <div
-            className="alert alert-primary alert-modal d-flex align-items-center p-2"
-            role="alert"
-            onClick={() =>
-              window.open(`https://ropsten.etherscan.io/tx/${txHash}`, "_blank")
-            }
-          >
-            <i className="fe fe-bell mr-2" aria-hidden="true"></i>
-            <span> {txHash}</span>
-          </div>
+          txHash.length > 0 && (
+            <div
+              className="alert alert-primary alert-modal d-flex align-items-center p-2"
+              role="alert"
+              onClick={() =>
+                window.open(
+                  `https://ropsten.etherscan.io/tx/${txHash}`,
+                  "_blank"
+                )
+              }
+            >
+              <i className="fe fe-bell mr-2" aria-hidden="true"></i>
+              <span> {txHash}</span>
+            </div>
+          )
         )}
         <div className="card">
           <div className="card-header">
