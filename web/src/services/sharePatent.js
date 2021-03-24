@@ -1,31 +1,32 @@
 import { web3 } from "../constants/constants";
 
-export const shareToken = async function (
+export const sharePatent = async function (
   fromAddress,
   toAddress,
   tokenID,
   update
 ) {
+  const patentContract = "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3";
   const minABI = [
     {
       inputs: [
-        {
-          internalType: "address",
-          name: "from",
-          type: "address",
-        },
         {
           internalType: "address",
           name: "to",
           type: "address",
         },
         {
+          internalType: "address",
+          name: "contractAddress",
+          type: "address",
+        },
+        {
           internalType: "uint256",
-          name: "tokenId",
+          name: "id",
           type: "uint256",
         },
       ],
-      name: "safeTransferFrom",
+      name: "sharePatent",
       outputs: [],
       stateMutability: "nonpayable",
       type: "function",
@@ -33,10 +34,10 @@ export const shareToken = async function (
   ];
   const contract = new web3.eth.Contract(
     minABI,
-    "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
+    "0x67e85C5e76AbB2df3F702Ae06Af46ceb33d76F9F"
   );
   contract.methods
-    .safeTransferFrom(fromAddress, toAddress, tokenID)
+    .sharePatent(toAddress, patentContract, tokenID)
     .send({ from: fromAddress })
     .on("transactionHash", (hash) => {
       update(hash);

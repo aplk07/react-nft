@@ -7,7 +7,7 @@ import { web3 } from "../constants/constants";
 import DownArrow from "../assets/down-arrow.svg";
 import UpArrow from "../assets/up-arrow.svg";
 import OpenNew from "../assets/open_new.svg";
-import ShareTokenModal from "./ShareTokenModal";
+import TransferPatentModal from "./TransferTokenModal";
 import { getTokenTransfer } from "../services/getTokenTransfer";
 
 export default function ProfileScreen({ ethereumBalance, fromAddress }) {
@@ -181,7 +181,7 @@ export default function ProfileScreen({ ethereumBalance, fromAddress }) {
         </div>
       </div>
       {shareModalVisible ? (
-        <ShareTokenModal
+        <TransferPatentModal
           fromAddress={fromAddress}
           status={shareModalVisible}
           data={shareData}

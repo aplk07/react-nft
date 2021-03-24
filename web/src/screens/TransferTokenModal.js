@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 
-import { shareToken } from "../services/shareToken";
+import { transferPatent } from "../services/transferPatent";
+import { sharePatent } from "../services/sharePatent";
 
-export default function ShareTokenModal({
+export default function TransferPatentModal({
   status,
   data,
   onCancel,
@@ -59,7 +60,7 @@ export default function ShareTokenModal({
               className="btn btn-info"
               disabled={txHash}
               onClick={() =>
-                shareToken(fromAddress, toAddress, tokenID, setTXHash)
+                sharePatent(fromAddress, toAddress, tokenID, setTXHash)
               }
             >
               <i className="fa fa-share mr-2"></i>Share
