@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Modal } from "react-bootstrap";
 
-import { shareToken } from "../services/shareToken";
+import { transferToken } from "../services/transferToken";
 
-export default function ShareTokenModal({
+export default function TransferTokenModal({
   status,
   data,
   onCancel,
@@ -11,6 +11,15 @@ export default function ShareTokenModal({
 }) {
   const [toAddress, setToAddress] = useState("");
   const [txHash, setTXHash] = useState("");
+  const [txData, setTXData] = useState(undefined);
+
+  const updateTransaction = function (txh) {
+    setTXHash(txh);
+  };
+
+  const transactionStatus = async function (data) {
+    setTXData(data);
+  };
 
   const { tokenID, tokenName } = data;
   return (
@@ -21,15 +30,22 @@ export default function ShareTokenModal({
       centered
     >
       <Modal.Body style={{ backgroundColor: "#202020" }}>
-        {txHash && (
+        {txData ? (
+          <div className="m-4 position-absolute">
+            <div className="alert alert-icon alert-success" role="alert">
+              <i className="fe fe-check mr-2" aria-hidden="true"></i>
+              {txData.status ? "Token Created Successfully" : "Failure"}
+            </div>
+          </div>
+        ) : (
           <div
-            className="alert alert-icon alert-primary alert-modal d-flex"
+            className="alert alert-primary alert-modal d-flex align-items-center p-2"
             role="alert"
             onClick={() =>
               window.open(`https://ropsten.etherscan.io/tx/${txHash}`, "_blank")
             }
           >
-            <i className="fe fe-bell" aria-hidden="true"></i>
+            <i className="fe fe-bell mr-2" aria-hidden="true"></i>
             <span> {txHash}</span>
           </div>
         )}
@@ -40,7 +56,9 @@ export default function ShareTokenModal({
           <div className="card-body text-white">Patent Name: {tokenName}</div>
           <div className="card-body">
             <div className="form-group">
-              <label className="form-label text-white">Share Patent To</label>
+              <label className="form-label text-white">
+                Transfer Patent To
+              </label>
               <div className="input-icon mb-3">
                 <input
                   type="text"
@@ -59,10 +77,16 @@ export default function ShareTokenModal({
               className="btn btn-info"
               disabled={txHash}
               onClick={() =>
-                shareToken(fromAddress, toAddress, tokenID, setTXHash)
+                transferToken(
+                  fromAddress,
+                  toAddress,
+                  tokenID,
+                  updateTransaction,
+                  transactionStatus
+                )
               }
             >
-              <i className="fa fa-share mr-2"></i>Share
+              <i className="fa fa-transfer mr-2"></i>Transfer
             </button>
           </div>
         </div>

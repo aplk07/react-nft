@@ -27,8 +27,8 @@ export const getTokenTransfer = async function (fromAddress, contract) {
               if (val.contractAddress === contract) {
                 if (Web3.utils.toChecksumAddress(val.from) === fromAddress) {
                   if (instanceData.tokenID === val.tokenID) {
-                    instanceData.share = val.hash;
-                    instanceData.sharedTo = val.to;
+                    instanceData.transfer = val.hash;
+                    instanceData.transferTo = val.to;
                   }
                 }
               }
@@ -45,6 +45,8 @@ export const getTokenTransfer = async function (fromAddress, contract) {
               if (val.contractAddress === contract) {
                 if (instanceData.tokenID === val.tokenID) {
                   instanceData.sharedFrom = val.from;
+                  instanceData.transfer = val.hash;
+                  instanceData.transferTo = val.to;
                 }
               }
               return null;
@@ -54,5 +56,6 @@ export const getTokenTransfer = async function (fromAddress, contract) {
         }
       }
     });
+  console.log(ownedPatent);
   return ownedPatent;
 };

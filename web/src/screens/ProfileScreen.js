@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
+/** eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 import { Accordion, Card } from "react-bootstrap";
 
@@ -7,14 +7,20 @@ import { web3 } from "../constants/constants";
 import DownArrow from "../assets/down-arrow.svg";
 import UpArrow from "../assets/up-arrow.svg";
 import OpenNew from "../assets/open_new.svg";
-import ShareTokenModal from "./ShareTokenModal";
+
+import TransferTokenModal from "./TransferTokenModal";
 import { getTokenTransfer } from "../services/getTokenTransfer";
 
-export default function ProfileScreen({ ethereumBalance, fromAddress }) {
+export default function ProfileScreen({
+  ethereumBalance,
+  fromAddress,
+  updateChange,
+}) {
   const [selectedID, setSelectedID] = useState("");
-  const [shareModalVisible, setShareModalVisible] = useState(false);
-  const [shareData, setShareData] = useState({});
+  const [transferModalVisible, setTransferModalVisible] = useState(false);
+  const [transferData, setTransferData] = useState({});
   const [list, setList] = useState(undefined);
+
   const url = "https://ropsten.etherscan.io/tx/";
 
   async function renderPatents() {
@@ -25,9 +31,11 @@ export default function ProfileScreen({ ethereumBalance, fromAddress }) {
     );
     setList(ownedPatent);
   }
+
   useEffect(() => {
     renderPatents();
   }, []);
+
   return (
     <div className="container">
       <div className="page-header">
@@ -74,20 +82,19 @@ export default function ProfileScreen({ ethereumBalance, fromAddress }) {
                       tokenName,
                       tokenSymbol,
                       hash,
-                      sharedTo,
-                      share,
+                      transferTo,
+                      transfer,
                     } = data;
+                    console.log("data", tokenID, transfer);
                     return (
                       <Card key={index}>
                         <Card.Header>
                           <Accordion.Toggle
                             className="d-flex align-items-center w-100 border-0 p-0"
                             variant="link"
-                            eventKey={uri.name}
+                            eventKey={hash}
                             onClick={() =>
-                              setSelectedID(
-                                selectedID === uri.name ? "" : uri.name
-                              )
+                              setSelectedID(selectedID === hash ? "" : hash)
                             }
                           >
                             <p>
@@ -102,15 +109,13 @@ export default function ProfileScreen({ ethereumBalance, fromAddress }) {
                             <div className="patent-id d-flex justify-content-between">
                               <span className="text-white">{tokenID}</span>
                               <img
-                                src={
-                                  uri.name === selectedID ? DownArrow : UpArrow
-                                }
+                                src={selectedID === hash ? DownArrow : UpArrow}
                                 alt="down"
                               />
                             </div>
                           </Accordion.Toggle>
                         </Card.Header>
-                        <Accordion.Collapse eventKey={uri.name}>
+                        <Accordion.Collapse eventKey={hash}>
                           <Card.Body>
                             <label className="text-white">Patent Name : </label>
                             <span className="text-white"> {uri.name}</span>
@@ -134,26 +139,26 @@ export default function ProfileScreen({ ethereumBalance, fromAddress }) {
                                 View on Ethereum scan.io
                               </span>
                             </div>
-                            {!share ? (
+                            {!transfer ? (
                               <div
                                 className="cursor-pointer mr-0"
                                 onClick={() => {
-                                  setShareModalVisible(true);
-                                  setShareData({
+                                  setTransferModalVisible(true);
+                                  setTransferData({
                                     tokenID,
                                     tokenName: uri.name,
                                   });
                                 }}
                               >
                                 <i className="fa fa-share mr-2"></i>
-                                <span className="text-white">Share</span>
+                                <span className="text-white">Transfer</span>
                               </div>
                             ) : (
                               <div
                                 className="cursor-pointer"
                                 onClick={() =>
                                   window.open(
-                                    `https://ropsten.etherscan.io/tx/${share}`,
+                                    `https://ropsten.etherscan.io/tx/${transfer}`,
                                     "_blank"
                                   )
                                 }
@@ -165,7 +170,7 @@ export default function ProfileScreen({ ethereumBalance, fromAddress }) {
                                 />
                                 {"   "}
                                 <span className="text-white">
-                                  Shared to {sharedTo}
+                                  Transfer to {transferTo}
                                 </span>
                               </div>
                             )}
@@ -180,12 +185,12 @@ export default function ProfileScreen({ ethereumBalance, fromAddress }) {
           </div>
         </div>
       </div>
-      {shareModalVisible ? (
-        <ShareTokenModal
+      {transferModalVisible ? (
+        <TransferTokenModal
           fromAddress={fromAddress}
-          status={shareModalVisible}
-          data={shareData}
-          onCancel={(state) => setShareModalVisible(state)}
+          status={transferModalVisible}
+          data={transferData}
+          onCancel={(state) => setTransferModalVisible(state)}
         />
       ) : null}
     </div>

@@ -2,9 +2,9 @@
 pragma solidity >=0.6.0 <0.8.2;
 import "./FilePatent.sol";
 
-contract SharePatent {
+contract TransferPatent {
     FilePatent fp;
-    event sharePatentEvent(
+    event transferPatentEvent(
         address indexed from,
         address indexed to,
         uint256 id
@@ -18,12 +18,15 @@ contract SharePatent {
         return fp.ownerOf(tokenId) == msg.sender;
     }
 
-    function sharePatent(
+    function transferPatent(
         address to,
         address contractAddress,
         uint256 id
     ) public {
-        require(checkOwner(contractAddress, id), "You cant Share this patent");
-        emit sharePatentEvent(msg.sender, to, id);
+        require(
+            checkOwner(contractAddress, id),
+            "You cant Transfer this patent"
+        );
+        emit transferPatentEvent(msg.sender, to, id);
     }
 }

@@ -1,10 +1,11 @@
 import { web3 } from "../constants/constants";
 
-export const shareToken = async function (
+export const transferToken = async function (
   fromAddress,
   toAddress,
   tokenID,
-  update
+  update,
+  success
 ) {
   const minABI = [
     {
@@ -42,6 +43,6 @@ export const shareToken = async function (
       update(hash);
     })
     .then((done) => {
-      console.log(done);
+      success(done);
     });
 };
