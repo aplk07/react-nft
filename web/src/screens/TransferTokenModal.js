@@ -10,6 +10,7 @@ export default function TransferPatentModal({
   type,
   onCancel,
   fromAddress,
+  setLoading,
 }) {
   const [toAddress, setToAddress] = useState("");
   const [txHash, setTXHash] = useState("");
@@ -21,6 +22,7 @@ export default function TransferPatentModal({
   };
 
   const { tokenID, tokenName } = data;
+
   return (
     <Modal
       show={status}
@@ -86,7 +88,10 @@ export default function TransferPatentModal({
                     fromAddress,
                     toAddress,
                     tokenID,
-                    setTXHash,
+                    (data) => {
+                      setTXHash(data);
+                      setLoading(false);
+                    },
                     onClose
                   )
                 }

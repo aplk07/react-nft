@@ -252,3 +252,7 @@ img {
 .input-width {
   width: 390px;
 }
+
+.alert-popup {
+  min-height: 300px;
+}

@@ -7,11 +7,17 @@ import { AccordionTable } from "../screens/AccordionTable";
 import { getPatentShare } from "../services/getPatentShare";
 import AlertComponent from "../screens/AlertPopup";
 
-export default function ProfileScreen({ error, ethereumBalance, fromAddress }) {
+export default function ProfileScreen({
+  error,
+  ethereumBalance,
+  fromAddress,
+  setError,
+}) {
   const [transferModalVisible, setTransferModalVisible] = useState(false);
   const [transferData, setTransferData] = useState({});
   const [type, setType] = useState("");
-  const [list, setList] = useState(undefined);
+  const [list, setList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   async function renderPatents() {
     if (fromAddress) {
@@ -35,12 +41,14 @@ export default function ProfileScreen({ error, ethereumBalance, fromAddress }) {
         data.shares = shares;
         return null;
       });
+      setLoading(false);
       setList(ownedPatent);
     }
   }
 
   useEffect(() => {
     if (!error) {
+      setLoading(true);
       renderPatents();
     }
   }, [error]);
@@ -81,6 +89,7 @@ export default function ProfileScreen({ error, ethereumBalance, fromAddress }) {
                 </table>
                 <AccordionTable
                   list={list}
+                  loading={loading}
                   setTransferModalVisible={setTransferModalVisible}
                   setTransferData={setTransferData}
                   setType={setType}
@@ -92,6 +101,7 @@ export default function ProfileScreen({ error, ethereumBalance, fromAddress }) {
       ) : (
         <AlertComponent
           error={error}
+          setError={setError}
           onCancel={(state) => setTransferModalVisible(state)}
         />
       )}

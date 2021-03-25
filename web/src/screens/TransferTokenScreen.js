@@ -7,7 +7,8 @@ import { web3 } from "../constants/constants";
 import { getPatentTransferedTo } from "../services/getPatentTransferedTo";
 
 export const TransferTokenScreen = () => {
-  const [list, setList] = useState(undefined);
+  const [list, setList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   async function renderPatents() {
     const addr = await web3.eth.getAccounts();
@@ -16,10 +17,12 @@ export const TransferTokenScreen = () => {
       "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
     );
 
+    setLoading(false);
     setList(transferedPatent);
   }
 
   useEffect(() => {
+    setLoading(true);
     renderPatents();
   }, []);
 
@@ -44,7 +47,11 @@ export const TransferTokenScreen = () => {
             </thead>
           </table>
 
-          <AccordionTable list={list} typeOfScreen={"transfer"} />
+          <AccordionTable
+            list={list}
+            loading={loading}
+            typeOfScreen={"transfer"}
+          />
         </div>
       </div>
     </div>

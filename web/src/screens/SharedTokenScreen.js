@@ -7,7 +7,8 @@ import { web3 } from "../constants/constants";
 import { getPatentShare } from "../services/getPatentShare";
 
 export const SharedTokenScreen = () => {
-  const [list, setList] = useState(undefined);
+  const [list, setList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   async function renderPatents() {
     const addr = await web3.eth.getAccounts();
@@ -17,17 +18,19 @@ export const SharedTokenScreen = () => {
       "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
     );
 
+    setLoading(false);
     setList(sharedPatentFrom);
   }
 
   useEffect(() => {
+    setLoading(true);
     renderPatents();
   }, []);
 
   return (
     <div className="container">
       <div className="page-header">
-        <div className="page-title">Transferred Patent</div>
+        <div className="page-title">Shared Patent</div>
       </div>
 
       <div className="card">
@@ -43,7 +46,11 @@ export const SharedTokenScreen = () => {
             </thead>
           </table>
 
-          <AccordionTable list={list} typeOfScreen={"share"} />
+          <AccordionTable
+            list={list}
+            loading={loading}
+            typeOfScreen={"share"}
+          />
         </div>
       </div>
     </div>
