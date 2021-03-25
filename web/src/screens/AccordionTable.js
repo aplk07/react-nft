@@ -71,13 +71,23 @@ export const AccordionTable = ({
                           className="cursor-pointer"
                           onClick={() => window.open(`${url}${hash}`, "_blank")}
                         >
-                          <img src={OpenNew} className="open-new" alt="" />
-                          {"   "}
-                          <span className="text-white">
-                            {from === baseAddress
-                              ? "View on Ethereum scan.io"
-                              : "Transfered From " + from}
-                          </span>
+                          {!typeOfScreen ? (
+                            <>
+                              <img src={OpenNew} className="open-new" alt="" />
+
+                              <span className="text-white">
+                                {from === baseAddress
+                                  ? "View on Ethereum scan.io"
+                                  : "Transfered From " + from}
+                              </span>
+                            </>
+                          ) : (
+                            <span className="text-white">
+                              {typeOfScreen === "transfer"
+                                ? "Transfered to " + to
+                                : "Shared from " + from}
+                            </span>
+                          )}
                         </div>
                         {data.shares && data.shares.length > 0 ? (
                           <div
@@ -148,13 +158,6 @@ export const AccordionTable = ({
                         </div>
                       </div>
                     </div>
-                    {typeOfScreen && (
-                      <span className="text-white">
-                        {typeOfScreen === "transfer"
-                          ? "Transfered to " + to
-                          : "Shared from " + from}
-                      </span>
-                    )}
                   </div>
                 </Card.Body>
               </Accordion.Collapse>
