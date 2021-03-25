@@ -1,4 +1,4 @@
-/** eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 
 import { web3 } from "../constants/constants";
@@ -6,8 +6,10 @@ import { web3 } from "../constants/constants";
 import TransferPatentModal from "./TransferTokenModal";
 import { getTokenTransfer } from "../services/getTokenTransfer";
 import { AccordionTable } from "../screens/AccordionTable";
+import AlertComponent from "../screens/AlertPopup";
 
 export default function ProfileScreen({
+  error,
   ethereumBalance,
   fromAddress,
   updateChange,
@@ -18,17 +20,20 @@ export default function ProfileScreen({
   const [list, setList] = useState(undefined);
 
   async function renderPatents() {
-    const addr = await web3.eth.getAccounts();
-    const ownedPatent = await getTokenTransfer(
-      addr[0],
-      "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
-    );
-    setList(ownedPatent);
+    console.log("err", error);
+    if (!error) {
+      const addr = await web3.eth.getAccounts();
+      const ownedPatent = await getTokenTransfer(
+        addr[0],
+        "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
+      );
+      setList(ownedPatent);
+    }
   }
 
   useEffect(() => {
     renderPatents();
-  }, []);
+  }, [error]);
 
   return (
     <div className="container">
@@ -73,7 +78,7 @@ export default function ProfileScreen({
           </div>
         </div>
       </div>
-      {transferModalVisible ? (
+      {transferModalVisible && (
         <TransferPatentModal
           fromAddress={fromAddress}
           status={transferModalVisible}
@@ -81,7 +86,13 @@ export default function ProfileScreen({
           data={transferData}
           onCancel={(state) => setTransferModalVisible(state)}
         />
-      ) : null}
+      )}
+      {error && (
+        <AlertComponent
+          error={error}
+          onCancel={(state) => setTransferModalVisible(state)}
+        />
+      )}
     </div>
   );
 }
