@@ -18,8 +18,18 @@ export const getPatentShare = async function (
       res.forEach(async (val) => {
         const tokenID = Web3.utils.hexToNumber(val.data);
         const uri = await getURIData(tokenID, patentContract);
-        uri.from = val.topics[1];
-        uri.to = val.topics[2];
+        function convertAddress(hexAddress) {
+          return web3.eth.abi.decodeParameter(
+            {
+              internalType: "address",
+              name: "to",
+              type: "address",
+            },
+            hexAddress
+          );
+        }
+        uri.from = convertAddress(val.topics[1]);
+        uri.to = convertAddress(val.topics[2]);
         sharedPatent.push(uri);
       });
     });
