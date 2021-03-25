@@ -1,4 +1,4 @@
-/** eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
 
 import { web3 } from "../constants/constants";
@@ -7,8 +7,10 @@ import TransferPatentModal from "./TransferTokenModal";
 import { getTokenTransfer } from "../services/getTokenTransfer";
 import { AccordionTable } from "../screens/AccordionTable";
 import { getPatentShare } from "../services/getPatentShare";
+import AlertComponent from "../screens/AlertPopup";
 
 export default function ProfileScreen({
+  error,
   ethereumBalance,
   fromAddress,
   updateChange,
@@ -43,7 +45,7 @@ export default function ProfileScreen({
 
   useEffect(() => {
     renderPatents();
-  }, []);
+  }, [error]);
 
   return (
     <div className="container">
@@ -88,7 +90,7 @@ export default function ProfileScreen({
           </div>
         </div>
       </div>
-      {transferModalVisible ? (
+      {transferModalVisible && (
         <TransferPatentModal
           fromAddress={fromAddress}
           status={transferModalVisible}
@@ -96,7 +98,13 @@ export default function ProfileScreen({
           data={transferData}
           onCancel={(state) => setTransferModalVisible(state)}
         />
-      ) : null}
+      )}
+      {error && (
+        <AlertComponent
+          error={error}
+          onCancel={(state) => setTransferModalVisible(state)}
+        />
+      )}
     </div>
   );
 }

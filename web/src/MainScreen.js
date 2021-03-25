@@ -12,6 +12,7 @@ import SharedTokenScreen from "./screens/SharedTokenScreen";
 export default function MainScreen() {
   const [activeAddress, setActiveAddress] = useState("");
   const [bal, setBal] = useState(0);
+  const [error, setError] = useState("");
 
   async function renderData() {
     try {
@@ -23,7 +24,7 @@ export default function MainScreen() {
         ).toFixed(4)
       );
     } catch (err) {
-      console.log(err);
+      setError(err);
     }
   }
 
@@ -49,6 +50,7 @@ export default function MainScreen() {
     <Switch>
       <Route exact path="/">
         <ProfileScreen
+          error={error}
           ethereumBalance={bal}
           fromAddress={activeAddress[0]}
           tokenAddress="0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
