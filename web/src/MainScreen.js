@@ -17,13 +17,21 @@ export default function MainScreen() {
     try {
       const addr = await web3.eth.getAccounts();
       setActiveAddress(addr);
-      setBal(
-        parseFloat(
-          web3.utils.fromWei(await web3.eth.getBalance(addr[0]), "ether")
-        ).toFixed(4)
-      );
+      if (addr.length > 0) {
+        setBal(
+          parseFloat(
+            web3.utils.fromWei(await web3.eth.getBalance(addr[0]), "ether")
+          ).toFixed(4)
+        );
+      } else {
+        setError("Login Metamask First");
+        const acc = await window.ethereum.enable();
+        if (acc.length > 0) {
+          setError("");
+        }
+      }
     } catch (err) {
-      setError(err);
+      setError("Login Metamask First");
     }
   }
 

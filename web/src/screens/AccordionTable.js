@@ -1,5 +1,10 @@
-import React, { useState } from "react";
-import { Accordion, Card } from "react-bootstrap";
+import React, { useRef, useState } from "react";
+import {
+  Accordion,
+  Card,
+  OverlayTrigger,
+  Tooltip,
+} from "react-bootstrap";
 
 import DownArrow from "../assets/down-arrow.svg";
 import UpArrow from "../assets/up-arrow.svg";
@@ -17,8 +22,8 @@ export const AccordionTable = ({
 
   const [selectedID, setSelectedID] = useState("");
 
-  console.log(list);
-
+  const ref = useRef(null);
+  
   return (
     <Accordion className="accordion-dropdown">
       {!list ? (
@@ -127,20 +132,62 @@ export const AccordionTable = ({
                           </div>
                         ) : (
                           <div className="d-flex flex-row justify-content-between">
-                            <div
-                              className="cursor-pointer"
-                              onClick={() =>
-                                window.open(
-                                  `https://ropsten.etherscan.io/tx/${hash}`,
-                                  "_blank"
-                                )
-                              }
-                            >
-                              <img src={OpenNew} className="open-new" alt="" />
-                              {"   "}
-                              <span className="text-white">
-                                Transfered from {from}
-                              </span>
+                            <div className="d-flex flex-column">
+                              <div
+                                className="cursor-pointer"
+                                onClick={() =>
+                                  window.open(
+                                    `https://ropsten.etherscan.io/tx/${hash}`,
+                                    "_blank"
+                                  )
+                                }
+                              >
+                                <img
+                                  src={OpenNew}
+                                  className="open-new"
+                                  alt=""
+                                />
+                                {"   "}
+                                <span className="text-white">
+                                  Transfered from {from}
+                                </span>
+                              </div>
+                              {data.shares.length > 0 ? (
+                                <div
+                                  ref={ref}
+                                  className="d-flex flex-row justify-content-eveny"
+                                >
+                                  Shares [{" "}
+                                  {data.shares.map((val, index) => (
+                                    <div
+                                      className="cursor-pointer"
+                                      onClick={(event) => {
+                                        window.open(
+                                          `https://ropsten.etherscan.io/address/${val}`,
+                                          "_blank"
+                                        );
+                                      }}
+                                    >
+                                      <OverlayTrigger
+                                        overlay={
+                                          <Tooltip id="tooltip-disabled">
+                                            {val}
+                                          </Tooltip>
+                                        }
+                                      >
+                                        <span className="d-inline-block">
+                                          {" "}
+                                          {index + 1}{" "}
+                                          {index + 1 < data.shares.length
+                                            ? ","
+                                            : null}
+                                        </span>
+                                      </OverlayTrigger>
+                                    </div>
+                                  ))}{" "}
+                                  ]
+                                </div>
+                              ) : null}
                             </div>
                             <div className="d-flex flex-row justify-content-between">
                               <div
@@ -177,9 +224,8 @@ export const AccordionTable = ({
                       {typeOfScreen && (
                         <span className="text-white">
                           {typeOfScreen === "transfer"
-                            ? "Transfered"
-                            : "Shared"}{" "}
-                          to {to}
+                            ? "Transfered to " + to
+                            : "Shared from " + from}
                         </span>
                       )}
                     </div>

@@ -7,9 +7,10 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
   const [description, setDescription] = useState("");
   const [txHash, setTXHash] = useState("");
   const [txData, setTXData] = useState(undefined);
-
+  const [disableButton, setButtonDiable] = useState(false);
   const updateTransaction = function (txh) {
     setTXHash(txh);
+    setButtonDiable(false);
   };
 
   const transactionStatus = async function (data) {
@@ -76,6 +77,7 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
           </div>
           <button
             type="button"
+            disabled={disableButton}
             className="btn btn-success mb-6"
             onClick={() => {
               if (name && description) {
