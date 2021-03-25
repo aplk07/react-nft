@@ -60,6 +60,8 @@ export default function MainScreen() {
       <Route exact path="/token-create">
         <TokenCreationScreen
           fromAddress={activeAddress[0]}
+          error={error}
+          setError={setError}
           updateChange={() => {
             renderData();
           }}
@@ -67,11 +69,19 @@ export default function MainScreen() {
       </Route>
 
       <Route exact path="/token-transfered">
-        <TransferTokenScreen />
+        <TransferTokenScreen
+          error={error}
+          setError={setError}
+          fromAddress={activeAddress[0]}
+        />
       </Route>
 
       <Route exact path="/token-share">
-        <SharedTokenScreen />
+        <SharedTokenScreen
+          error={error}
+          setError={setError}
+          fromAddress={activeAddress[0]}
+        />
       </Route>
     </Switch>
   );

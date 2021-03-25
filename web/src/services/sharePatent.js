@@ -4,7 +4,9 @@ export const sharePatent = async function (
   fromAddress,
   toAddress,
   tokenID,
-  update
+  update,
+  success,
+  error
 ) {
   const patentContract = "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3";
   const minABI = [
@@ -36,13 +38,17 @@ export const sharePatent = async function (
     minABI,
     "0x67e85C5e76AbB2df3F702Ae06Af46ceb33d76F9F"
   );
-  contract.methods
-    .sharePatent(toAddress, patentContract, tokenID)
-    .send({ from: fromAddress })
-    .on("transactionHash", (hash) => {
-      update(hash);
-    })
-    .then((done) => {
-      console.log(done);
-    });
+  try {
+    contract.methods
+      .sharePatent(toAddress, patentContract, tokenID)
+      .send({ from: fromAddress })
+      .on("transactionHash", (hash) => {
+        update(hash);
+      })
+      .then((done) => {
+        console.log(done);
+      });
+  } catch (err) {
+    error(err.message);
+  }
 };

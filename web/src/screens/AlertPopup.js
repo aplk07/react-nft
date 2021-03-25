@@ -1,12 +1,12 @@
 import React from "react";
 import { Modal } from "react-bootstrap";
 
-export const AlertComponent = ({ error = false, setError }) => {
+export const AlertComponent = ({ error = false, setError, setIgnored }) => {
   return (
     <Modal
       show={error}
       className="fadeInRight animated"
-      onHide={() => setError("")}
+      onHide={() => setIgnored(true)}
     >
       <div style={{ backgroundColor: "#202020" }} className="alert-popup">
         <Modal.Header>
@@ -14,7 +14,7 @@ export const AlertComponent = ({ error = false, setError }) => {
             <h4 className="text-white">ERROR</h4>
             <i
               className="fa fa-close cursor-pointer text-white"
-              onClick={() => setError("")}
+              onClick={() => setIgnored(true)}
             ></i>
           </div>
         </Modal.Header>

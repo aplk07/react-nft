@@ -14,6 +14,7 @@ export default function TransferPatentModal({
   const [toAddress, setToAddress] = useState("");
   const [txHash, setTXHash] = useState("");
   const [txData, setTXData] = useState(undefined);
+  const [errorData, setErrorData] = useState("");
 
   const onClose = (data) => {
     onCancel(false);
@@ -54,6 +55,17 @@ export default function TransferPatentModal({
             </div>
           )
         )}
+        {errorData ? (
+          <div class="alert alert-danger alert-dismissible">
+            <button
+              type="button"
+              onClick={() => setErrorData("")}
+              className="close"
+              data-dismiss="alert"
+            ></button>
+            {errorData}
+          </div>
+        ) : null}
         <div className="card">
           <div className="card-header">
             <h3 className="card-title text-white">Patent ID: {tokenID}</h3>
@@ -90,7 +102,8 @@ export default function TransferPatentModal({
                     (data) => {
                       setTXHash(data);
                     },
-                    onClose
+                    onClose,
+                    setErrorData
                   )
                 }
               >
@@ -108,7 +121,8 @@ export default function TransferPatentModal({
                     toAddress,
                     tokenID,
                     setTXHash,
-                    onClose
+                    onClose,
+                    setErrorData
                   )
                 }
               >

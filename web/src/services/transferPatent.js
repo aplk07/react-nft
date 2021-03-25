@@ -5,7 +5,8 @@ export const transferPatent = async function (
   toAddress,
   tokenID,
   update,
-  success
+  success,
+  error
 ) {
   const minABI = [
     {
@@ -36,13 +37,17 @@ export const transferPatent = async function (
     minABI,
     "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
   );
-  contract.methods
-    .safeTransferFrom(fromAddress, toAddress, tokenID)
-    .send({ from: fromAddress })
-    .on("transactionHash", (hash) => {
-      update(hash);
-    })
-    .then((done) => {
-      success(done);
-    });
+  try {
+    contract.methods
+      .safeTransferFrom(fromAddress, toAddress, tokenID)
+      .send({ from: fromAddress })
+      .on("transactionHash", (hash) => {
+        update(hash);
+      })
+      .then((done) => {
+        success(done);
+      });
+  } catch (err) {
+    error(err.message);
+  }
 };
