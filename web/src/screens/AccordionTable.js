@@ -2,9 +2,7 @@ import React, { useRef, useState } from "react";
 import {
   Accordion,
   Card,
-  Overlay,
   OverlayTrigger,
-  Popover,
   Tooltip,
 } from "react-bootstrap";
 
@@ -23,9 +21,9 @@ export const AccordionTable = ({
   const baseAddress = "0x0000000000000000000000000000000000000000";
 
   const [selectedID, setSelectedID] = useState("");
-  const [show, setShow] = useState(false);
-  const [target, setTarget] = useState(null);
+
   const ref = useRef(null);
+  
   return (
     <Accordion className="accordion-dropdown">
       {!list ? (

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Switch, Route, NavLink } from "react-router-dom";
 
-import Web3 from "web3";
 import { web3 } from "./constants/constants";
 
 import TokenCreationScreen from "./screens/CreateTokenScreen";
@@ -18,28 +17,25 @@ export default function MainScreen() {
     try {
       const addr = await web3.eth.getAccounts();
       setActiveAddress(addr);
-      setBal(
-        parseFloat(
-          web3.utils.fromWei(await web3.eth.getBalance(addr[0]), "ether")
-        ).toFixed(4)
-      );
+      if (addr.length > 0) {
+        setBal(
+          parseFloat(
+            web3.utils.fromWei(await web3.eth.getBalance(addr[0]), "ether")
+          ).toFixed(4)
+        );
+      } else {
+        setError("Login Metamask First");
+        const acc = await window.ethereum.enable();
+        if (acc.length > 0) {
+          setError("");
+        }
+      }
     } catch (err) {
-      setError(err);
+      setError("Login Metamask First");
     }
-  }
-
-  const ethEnabled = () => {
-    if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider);
-      window.ethereum.enable();
-      return true;
-    }
-    return false;
   }
 
   useEffect(() => {
-    if(!ethEnabled){
-    }
     renderData();
     window.ethereum.on("accountsChanged", function () {
       renderData();
