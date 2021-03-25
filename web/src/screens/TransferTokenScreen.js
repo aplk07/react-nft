@@ -7,7 +7,7 @@ import { web3 } from "../constants/constants";
 import { getPatentTransferedTo } from "../services/getPatentTransferedTo";
 
 export const TransferTokenScreen = () => {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(undefined);
 
   async function renderPatents() {
     const addr = await web3.eth.getAccounts();

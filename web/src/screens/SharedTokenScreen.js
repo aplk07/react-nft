@@ -7,24 +7,22 @@ import { web3 } from "../constants/constants";
 import { getPatentShare } from "../services/getPatentShare";
 
 export const SharedTokenScreen = () => {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(undefined);
 
   async function renderPatents() {
     const addr = await web3.eth.getAccounts();
-    const sharedPatent = await getPatentShare(
+    const { sharedPatentFrom } = await getPatentShare(
       addr[0],
       "0x67e85C5e76AbB2df3F702Ae06Af46ceb33d76F9F",
       "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
     );
 
-    setList(sharedPatent);
+    setList(sharedPatentFrom);
   }
 
   useEffect(() => {
     renderPatents();
   }, []);
-
-  console.log(list);
 
   return (
     <div className="container">

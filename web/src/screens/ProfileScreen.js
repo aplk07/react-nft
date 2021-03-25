@@ -6,6 +6,7 @@ import { web3 } from "../constants/constants";
 import TransferPatentModal from "./TransferTokenModal";
 import { getTokenTransfer } from "../services/getTokenTransfer";
 import { AccordionTable } from "../screens/AccordionTable";
+import { getPatentShare } from "../services/getPatentShare";
 
 export default function ProfileScreen({
   ethereumBalance,
@@ -23,6 +24,20 @@ export default function ProfileScreen({
       addr[0],
       "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
     );
+    const { sharedPatentTo } = await getPatentShare(
+      addr[0],
+      "0x67e85C5e76AbB2df3F702Ae06Af46ceb33d76F9F",
+      "0x7e40600d3f52ccc62fb94187ac6decb8802c22f3"
+    );
+    ownedPatent.map((data) => {
+      const shares = [];
+      sharedPatentTo.forEach((val) => {
+        if (data.tokenID == val.tokenID) {
+          shares.push(val.to);
+        }
+      });
+      data.shares = shares;
+    });
     setList(ownedPatent);
   }
 

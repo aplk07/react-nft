@@ -16,9 +16,6 @@ export const AccordionTable = ({
   const baseAddress = "0x0000000000000000000000000000000000000000";
 
   const [selectedID, setSelectedID] = useState("");
-
-  console.log(list);
-
   return (
     <Accordion className="accordion-dropdown">
       {!list ? (
@@ -127,20 +124,46 @@ export const AccordionTable = ({
                           </div>
                         ) : (
                           <div className="d-flex flex-row justify-content-between">
-                            <div
-                              className="cursor-pointer"
-                              onClick={() =>
-                                window.open(
-                                  `https://ropsten.etherscan.io/tx/${hash}`,
-                                  "_blank"
-                                )
-                              }
-                            >
-                              <img src={OpenNew} className="open-new" alt="" />
-                              {"   "}
-                              <span className="text-white">
-                                Transfered from {from}
-                              </span>
+                            <div className="d-flex flex-column">
+                              <div
+                                className="cursor-pointer"
+                                onClick={() =>
+                                  window.open(
+                                    `https://ropsten.etherscan.io/tx/${hash}`,
+                                    "_blank"
+                                  )
+                                }
+                              >
+                                <img
+                                  src={OpenNew}
+                                  className="open-new"
+                                  alt=""
+                                />
+                                {"   "}
+                                <span className="text-white">
+                                  Transfered from {from}
+                                </span>
+                              </div>
+                              {data.shares ? (
+                                <div className="d-flex flex-row justify-content-eveny">
+                                  Shares [{" "}
+                                  {data.shares.map((val, index) => (
+                                    <div
+                                      className="cursor-pointer"
+                                      onClick={() =>
+                                        window.open(uri + val, "_blank")
+                                      }
+                                    >
+                                      {" "}
+                                      {index + 1}{" "}
+                                      {index + 1 < data.shares.length
+                                        ? ","
+                                        : null}
+                                    </div>
+                                  ))}{" "}
+                                  ]
+                                </div>
+                              ) : null}
                             </div>
                             <div className="d-flex flex-row justify-content-between">
                               <div
@@ -177,9 +200,8 @@ export const AccordionTable = ({
                       {typeOfScreen && (
                         <span className="text-white">
                           {typeOfScreen === "transfer"
-                            ? "Transfered"
-                            : "Shared"}{" "}
-                          to {to}
+                            ? "Transfered to " + to
+                            : "Shared from " + from}
                         </span>
                       )}
                     </div>
