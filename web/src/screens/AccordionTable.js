@@ -1,10 +1,5 @@
 import React, { useRef, useState } from "react";
-import {
-  Accordion,
-  Card,
-  OverlayTrigger,
-  Tooltip,
-} from "react-bootstrap";
+import { Accordion, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import DownArrow from "../assets/down-arrow.svg";
 import UpArrow from "../assets/up-arrow.svg";
@@ -21,9 +16,9 @@ export const AccordionTable = ({
   const baseAddress = "0x0000000000000000000000000000000000000000";
 
   const [selectedID, setSelectedID] = useState("");
-
+  const [show, setShow] = useState(false);
+  const [target, setTarget] = useState(null);
   const ref = useRef(null);
-  
   return (
     <Accordion className="accordion-dropdown">
       {!list ? (
@@ -81,7 +76,7 @@ export const AccordionTable = ({
                       {!typeOfScreen &&
                         (from === baseAddress ? (
                           <div className="d-flex flex-row justify-content-between">
-                            <div className="d-flex">
+                            <div className="d-flex flex-column">
                               <div
                                 className="cursor-pointer"
                                 onClick={() =>
@@ -98,6 +93,42 @@ export const AccordionTable = ({
                                   View on Ethereum scan.io
                                 </span>
                               </div>
+                              {data.shares.length > 0 ? (
+                                <div
+                                  ref={ref}
+                                  className="d-flex flex-row justify-content-eveny"
+                                >
+                                  Shares [{" "}
+                                  {data.shares.map((val, index) => (
+                                    <div
+                                      className="cursor-pointer"
+                                      onClick={() => {
+                                        window.open(
+                                          `https://ropsten.etherscan.io/address/${val}`,
+                                          "_blank"
+                                        );
+                                      }}
+                                    >
+                                      <OverlayTrigger
+                                        overlay={
+                                          <Tooltip id="tooltip-disabled">
+                                            {val}
+                                          </Tooltip>
+                                        }
+                                      >
+                                        <span className="d-inline-block">
+                                          {" "}
+                                          {index + 1}{" "}
+                                          {index + 1 < data.shares.length
+                                            ? ","
+                                            : null}
+                                        </span>
+                                      </OverlayTrigger>
+                                    </div>
+                                  ))}{" "}
+                                  ]
+                                </div>
+                              ) : null}
                             </div>
                             <div className="d-flex flex-row justify-content-between">
                               <div
