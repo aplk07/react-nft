@@ -7,11 +7,7 @@ import { AccordionTable } from "../screens/AccordionTable";
 import { getPatentShare } from "../services/getPatentShare";
 import AlertComponent from "../screens/AlertPopup";
 
-export default function ProfileScreen({
-  error,
-  ethereumBalance,
-  fromAddress
-}) {
+export default function ProfileScreen({ error, ethereumBalance, fromAddress }) {
   const [transferModalVisible, setTransferModalVisible] = useState(false);
   const [transferData, setTransferData] = useState({});
   const [type, setType] = useState("");
@@ -37,6 +33,7 @@ export default function ProfileScreen({
           }
         });
         data.shares = shares;
+        return null;
       });
       setList(ownedPatent);
     }

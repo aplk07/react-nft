@@ -15,13 +15,10 @@ export default function TransferPatentModal({
   const [txHash, setTXHash] = useState("");
   const [txData, setTXData] = useState(undefined);
 
-  // const updateTransaction = function (txh) {
-  //   setTXHash(txh);
-  // };
-
-  // const transactionStatus = async function (data) {
-  //   setTXData(data);
-  // };
+  const onClose = (data) => {
+    onCancel(false);
+    setTXData(data);
+  };
 
   const { tokenID, tokenName } = data;
   return (
@@ -90,7 +87,7 @@ export default function TransferPatentModal({
                     toAddress,
                     tokenID,
                     setTXHash,
-                    setTXData
+                    onClose
                   )
                 }
               >
@@ -108,7 +105,7 @@ export default function TransferPatentModal({
                     toAddress,
                     tokenID,
                     setTXHash,
-                    setTXData
+                    onClose
                   )
                 }
               >
