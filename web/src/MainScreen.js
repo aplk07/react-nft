@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Switch, Route, NavLink } from "react-router-dom";
 
+import Web3 from "web3";
 import { web3 } from "./constants/constants";
 
 import TokenCreationScreen from "./screens/CreateTokenScreen";
@@ -26,7 +27,18 @@ export default function MainScreen() {
     }
   }
 
+  const ethEnabled = () => {
+    if (window.web3) {
+      window.web3 = new Web3(window.web3.currentProvider);
+      window.ethereum.enable();
+      return true;
+    }
+    return false;
+  }
+
   useEffect(() => {
+    if(!ethEnabled){
+    }
     renderData();
     window.ethereum.on("accountsChanged", function () {
       renderData();

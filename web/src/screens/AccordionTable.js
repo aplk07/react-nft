@@ -1,5 +1,12 @@
-import React, { useState } from "react";
-import { Accordion, Card } from "react-bootstrap";
+import React, { useRef, useState } from "react";
+import {
+  Accordion,
+  Card,
+  Overlay,
+  OverlayTrigger,
+  Popover,
+  Tooltip,
+} from "react-bootstrap";
 
 import DownArrow from "../assets/down-arrow.svg";
 import UpArrow from "../assets/up-arrow.svg";
@@ -16,6 +23,9 @@ export const AccordionTable = ({
   const baseAddress = "0x0000000000000000000000000000000000000000";
 
   const [selectedID, setSelectedID] = useState("");
+  const [show, setShow] = useState(false);
+  const [target, setTarget] = useState(null);
+  const ref = useRef(null);
   return (
     <Accordion className="accordion-dropdown">
       {!list ? (
@@ -144,21 +154,37 @@ export const AccordionTable = ({
                                   Transfered from {from}
                                 </span>
                               </div>
-                              {data.shares ? (
-                                <div className="d-flex flex-row justify-content-eveny">
+                              {data.shares.length > 0 ? (
+                                <div
+                                  ref={ref}
+                                  className="d-flex flex-row justify-content-eveny"
+                                >
                                   Shares [{" "}
                                   {data.shares.map((val, index) => (
                                     <div
                                       className="cursor-pointer"
-                                      onClick={() =>
-                                        window.open(uri + val, "_blank")
-                                      }
+                                      onClick={(event) => {
+                                        window.open(
+                                          `https://ropsten.etherscan.io/address/${val}`,
+                                          "_blank"
+                                        );
+                                      }}
                                     >
-                                      {" "}
-                                      {index + 1}{" "}
-                                      {index + 1 < data.shares.length
-                                        ? ","
-                                        : null}
+                                      <OverlayTrigger
+                                        overlay={
+                                          <Tooltip id="tooltip-disabled">
+                                            {val}
+                                          </Tooltip>
+                                        }
+                                      >
+                                        <span className="d-inline-block">
+                                          {" "}
+                                          {index + 1}{" "}
+                                          {index + 1 < data.shares.length
+                                            ? ","
+                                            : null}
+                                        </span>
+                                      </OverlayTrigger>
                                     </div>
                                   ))}{" "}
                                   ]
