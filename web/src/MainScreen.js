@@ -5,6 +5,8 @@ import { web3 } from "./constants/constants";
 
 import TokenCreationScreen from "./screens/CreateTokenScreen";
 import ProfileScreen from "./screens/ProfileScreen";
+import TransferTokenScreen from "./screens/TransferTokenScreen";
+import SharedTokenScreen from "./screens/SharedTokenScreen";
 
 export default function MainScreen() {
   const [activeAddress, setActiveAddress] = useState("");
@@ -51,6 +53,14 @@ export default function MainScreen() {
             renderData();
           }}
         />
+      </Route>
+
+      <Route exact path="/token-transfered">
+        <TransferTokenScreen />
+      </Route>
+
+      <Route exact path="/token-share">
+        <SharedTokenScreen />
       </Route>
     </Switch>
   );
@@ -104,6 +114,26 @@ export default function MainScreen() {
                       activeClassName="active"
                     >
                       <i className="fa fa-edit"></i> Create Patent
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      exact
+                      to={{ pathname: "/token-transfered" }}
+                      className="nav-link"
+                      activeClassName="active"
+                    >
+                      <i className="fa fa-share"></i> Transferred Patent
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink
+                      exact
+                      to={{ pathname: "/token-share" }}
+                      className="nav-link"
+                      activeClassName="active"
+                    >
+                      <i className="fa fa-share-alt"></i> Shared Patent
                     </NavLink>
                   </li>
                 </ul>

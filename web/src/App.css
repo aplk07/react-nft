@@ -248,3 +248,7 @@ img {
 .alert-modal span {
   font-size: 12px;
 }
+
+.input-width {
+  width: 390px;
+}

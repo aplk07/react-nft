@@ -49,7 +49,7 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
                   <div className="form-group">
                     <label className="form-label text-white">Name</label>
                     <input
-                      className="form-control"
+                      className="form-control input-width"
                       placeholder="Pen with scanner"
                       value={name}
                       onChange={(val) => setName(val.target.value)}
@@ -61,7 +61,7 @@ export default function TokenCreationScreen({ fromAddress, updateChange }) {
                 <div className="form-group">
                   <label className="form-label text-white">Abstract</label>
                   <textarea
-                    className="form-control"
+                    className="form-control input-width"
                     name="description"
                     rows="7"
                     placeholder="With a machine as small as a pen, you can transfer text from paper directly into a computer. Christer Fåhraeus invented the C-pen."
