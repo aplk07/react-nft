@@ -16,8 +16,7 @@ export const AccordionTable = ({
   const baseAddress = "0x0000000000000000000000000000000000000000";
 
   const [selectedID, setSelectedID] = useState("");
-  const [show, setShow] = useState(false);
-  const [target, setTarget] = useState(null);
+
   const ref = useRef(null);
   return (
     <Accordion className="accordion-dropdown">
@@ -73,185 +72,91 @@ export const AccordionTable = ({
                     <span className="text-white">{uri.description}</span>
                     <br />
                     <div class="card-footer mt-4">
-                      {!typeOfScreen &&
-                        (from === baseAddress ? (
-                          <div className="d-flex flex-row justify-content-between">
-                            <div className="d-flex flex-column">
-                              <div
-                                className="cursor-pointer"
-                                onClick={() =>
-                                  window.open(`${url}${hash}`, "_blank")
-                                }
-                              >
-                                <img
-                                  src={OpenNew}
-                                  className="open-new"
-                                  alt=""
-                                />
-                                {"   "}
-                                <span className="text-white">
-                                  View on Ethereum scan.io
-                                </span>
-                              </div>
-                              {data.shares.length > 0 ? (
-                                <div
-                                  ref={ref}
-                                  className="d-flex flex-row justify-content-eveny"
-                                >
-                                  Shares [{" "}
-                                  {data.shares.map((val, index) => (
-                                    <div
-                                      className="cursor-pointer"
-                                      onClick={() => {
-                                        window.open(
-                                          `https://ropsten.etherscan.io/address/${val}`,
-                                          "_blank"
-                                        );
-                                      }}
-                                    >
-                                      <OverlayTrigger
-                                        overlay={
-                                          <Tooltip id="tooltip-disabled">
-                                            {val}
-                                          </Tooltip>
-                                        }
-                                      >
-                                        <span className="d-inline-block">
-                                          {" "}
-                                          {index + 1}{" "}
-                                          {index + 1 < data.shares.length
-                                            ? ","
-                                            : null}
-                                        </span>
-                                      </OverlayTrigger>
-                                    </div>
-                                  ))}{" "}
-                                  ]
-                                </div>
-                              ) : null}
-                            </div>
-                            <div className="d-flex flex-row justify-content-between">
-                              <div
-                                className="cursor-pointer mr-4"
-                                onClick={() => {
-                                  setTransferModalVisible(true);
-                                  setType("transfer");
-                                  setTransferData({
-                                    tokenID,
-                                    tokenName: uri.name,
-                                  });
-                                }}
-                              >
-                                <i className="fa fa-share mr-2"></i>
-                                <span className="text-white">Transfer</span>
-                              </div>
-                              <div
-                                className="cursor-pointer"
-                                onClick={() => {
-                                  setTransferModalVisible(true);
-                                  setType("share");
-                                  setTransferData({
-                                    tokenID,
-                                    tokenName: uri.name,
-                                  });
-                                }}
-                              >
-                                <i className="fa fa-share-alt mr-2"></i>
-                                <span className="text-white">Share</span>
-                              </div>
-                            </div>
+                      <div className="d-flex flex-row justify-content-between">
+                        <div className="d-flex flex-column">
+                          <div
+                            className="cursor-pointer"
+                            onClick={() =>
+                              window.open(`${url}${hash}`, "_blank")
+                            }
+                          >
+                            <img src={OpenNew} className="open-new" alt="" />
+                            {"   "}
+                            <span className="text-white">
+                              {from === baseAddress
+                                ? "View on Ethereum scan.io"
+                                : "Transfered From " + from}
+                            </span>
                           </div>
-                        ) : (
-                          <div className="d-flex flex-row justify-content-between">
-                            <div className="d-flex flex-column">
-                              <div
-                                className="cursor-pointer"
-                                onClick={() =>
-                                  window.open(
-                                    `https://ropsten.etherscan.io/tx/${hash}`,
-                                    "_blank"
-                                  )
-                                }
-                              >
-                                <img
-                                  src={OpenNew}
-                                  className="open-new"
-                                  alt=""
-                                />
-                                {"   "}
-                                <span className="text-white">
-                                  Transfered from {from}
-                                </span>
-                              </div>
-                              {data.shares.length > 0 ? (
+                          {data.shares.length > 0 ? (
+                            <div
+                              ref={ref}
+                              className="d-flex flex-row justify-content-eveny"
+                            >
+                              Shares [{" "}
+                              {data.shares.map((val, index) => (
                                 <div
-                                  ref={ref}
-                                  className="d-flex flex-row justify-content-eveny"
+                                  className="cursor-pointer"
+                                  onClick={() => {
+                                    window.open(
+                                      `https://ropsten.etherscan.io/address/${val}`,
+                                      "_blank"
+                                    );
+                                  }}
                                 >
-                                  Shares [{" "}
-                                  {data.shares.map((val, index) => (
-                                    <div
-                                      className="cursor-pointer"
-                                      onClick={(event) => {
-                                        window.open(
-                                          `https://ropsten.etherscan.io/address/${val}`,
-                                          "_blank"
-                                        );
-                                      }}
-                                    >
-                                      <OverlayTrigger
-                                        overlay={
-                                          <Tooltip id="tooltip-disabled">
-                                            {val}
-                                          </Tooltip>
-                                        }
-                                      >
-                                        <span className="d-inline-block">
-                                          {" "}
-                                          {index + 1}{" "}
-                                          {index + 1 < data.shares.length
-                                            ? ","
-                                            : null}
-                                        </span>
-                                      </OverlayTrigger>
-                                    </div>
-                                  ))}{" "}
-                                  ]
+                                  <OverlayTrigger
+                                    key={index}
+                                    overlay={
+                                      <Tooltip id="tooltip-disabled">
+                                        {val}
+                                      </Tooltip>
+                                    }
+                                  >
+                                    <span className="d-inline-block">
+                                      {" "}
+                                      {index + 1}{" "}
+                                      {index + 1 < data.shares.length
+                                        ? ","
+                                        : null}
+                                    </span>
+                                  </OverlayTrigger>
                                 </div>
-                              ) : null}
+                              ))}{" "}
+                              ]
                             </div>
-                            <div className="d-flex flex-row justify-content-between">
-                              <div
-                                className="cursor-pointer mr-4"
-                                onClick={() => {
-                                  setTransferModalVisible(true);
-                                  setType("transfer");
-                                  setTransferData({
-                                    tokenID,
-                                    tokenName: uri.name,
-                                  });
-                                }}
-                              >
-                                <i className="fa fa-share mr-2"></i>
-                                <span className="text-white">Transfer</span>
-                              </div>
-                              <div
-                                className="cursor-pointer"
-                                onClick={() => {
-                                  setTransferModalVisible(true);
-                                  setType("share");
-                                  setTransferData({
-                                    tokenID,
-                                    tokenName: uri.name,
-                                  });
-                                }}
-                              >
-                                <i className="fa fa-share-alt mr-2"></i>
-                                <span className="text-white">Share</span>
-                              </div>
-                            </div>
+                          ) : null}
+                        </div>
+                        <div className="d-flex flex-row justify-content-between">
+                          <div
+                            className="cursor-pointer mr-4"
+                            onClick={() => {
+                              setTransferModalVisible(true);
+                              setType("transfer");
+                              setTransferData({
+                                tokenID,
+                                tokenName: uri.name,
+                              });
+                            }}
+                          >
+                            <i className="fa fa-share mr-2"></i>
+                            <span className="text-white">Transfer</span>
                           </div>
-                        ))}
+                          <div
+                            className="cursor-pointer"
+                            onClick={() => {
+                              setTransferModalVisible(true);
+                              setType("share");
+                              setTransferData({
+                                tokenID,
+                                tokenName: uri.name,
+                              });
+                            }}
+                          >
+                            <i className="fa fa-share-alt mr-2"></i>
+                            <span className="text-white">Share</span>
+                          </div>
+                        </div>
+                      </div>
                       {typeOfScreen && (
                         <span className="text-white">
                           {typeOfScreen === "transfer"
