@@ -4,6 +4,9 @@ import { Accordion, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import DownArrow from "../assets/down-arrow.svg";
 import UpArrow from "../assets/up-arrow.svg";
 import OpenNew from "../assets/open_new.svg";
+import { Bee } from "@ethersphere/bee-js";
+
+const bee = new Bee("https://gateway.ethswarm.org");
 
 export const AccordionTable = ({
   list = [],
@@ -20,7 +23,15 @@ export const AccordionTable = ({
 
   const ref = useRef(null);
 
-  console.log(list, loading);
+  const isDownlodable = async (hash) => {
+    await bee.downloadFile(hash).then((fileIns) => {
+      if (fileIns) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  };
 
   return (
     <Accordion className="accordion-dropdown">
@@ -156,6 +167,21 @@ export const AccordionTable = ({
                           <i className="fa fa-share-alt mr-2"></i>
                           <span className="text-white">Share</span>
                         </div>
+                        {uri.documentHash ? (
+                          isDownlodable(uri.documentHash) ? (
+                            <div
+                              className="cursor-pointer"
+                              onClick={() => {
+                                window.open(
+                                  `https://gateway.ethswarm.org/files/${uri.documentHash}`
+                                );
+                              }}
+                            >
+                              <i className="fa fa-file ml-2 mr-2"></i>
+                              <span className="text-white">Open</span>
+                            </div>
+                          ) : null
+                        ) : null}
                       </div>
                     </div>
                   </div>
